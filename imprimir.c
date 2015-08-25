@@ -1,12 +1,12 @@
 #include "imprimir.h"
-
-void valor_registro( long int valores[])
+#include <stdio.h>
+void valor_registro( unsigned long int valores[])
 {
 
 
     int i;
     for(i=0;i<12;i++)
     {
-        printf("Registro %d: %d\n",i,valores[i]);
+        printf("Registro %d: %ld\n",i,valores[i]);
     }
 }
