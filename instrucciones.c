@@ -1,5 +1,47 @@
 #include "instrucciones.h"
 
+
+void flags(uint32_t a, uint32_t b, uint32_t c, char *p)
+{
+    uint32_t aux=2147483648;
+    //Bandera N
+    if(c<aux)
+    {
+        *p=0;
+    }
+    else
+    {
+        *p=1;
+    }
+    //Bandera Z
+    if(c==0)
+    {
+        *(p+1)=1;
+    }
+    else
+    {
+        *(p+1)=0;
+    }
+    //Bandera C
+    if(((a>=aux) & (b<aux) & (c<aux))||((b>=aux) & (a<aux) & (c<aux))||((a>=aux) & (b>=aux)))
+    {
+        *(p+2)=1;
+    }
+    else
+    {
+        *(p+2)=0;
+    }
+    //Bandera V
+    if(((a>=aux) & (b>=aux) & (c<aux))||((a<aux) & (b<aux)) & (c>=aux))
+    {
+        *(p+3)=1;
+    }
+    else
+    {
+        *(p+3)=0;
+    }
+}
+
 uint32_t add(uint32_t a, uint32_t b)
 {
     return a+b;

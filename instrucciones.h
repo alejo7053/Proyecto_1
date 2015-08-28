@@ -5,6 +5,10 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
+void flags(uint32_t a, uint32_t b, uint32_t c, char *p);
+
 uint32_t add(uint32_t a, uint32_t b);
 
 /**
