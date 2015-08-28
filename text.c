@@ -1,21 +1,26 @@
 #include "imprimir.h"
 #include "instrucciones.h"
-//el siguiente archivo es para probar las librerias hechas
-//para mantenerlas en una carpeta aparte
+/**
+*\brief
+  <center><b>TEXT</b></center> \n
+  <b><small>Este archivo es para probar las librerias.</small></b>  
+*/
 int main()
 {
-    uint32_t reg[12], v,a,b;
+    uint32_t reg[12], v,a,b; //declaracion de variables tipo unsigned long int
     char regf[4], *f=regf;//orden regf: N,Z,C,V
-    int op,oc;
-    printf("escoja la libreria a probar\n1:\t para probar libreria imprimir\n2:\tpara probar libreria instrucciones\n");
-    scanf("%d",&op);
+    int op,oc; // declaracion de variables tipo int
+    printf("escoja la libreria a probar\n1:\t para probar libreria imprimir\n2:\tpara probar libreria instrucciones\n");// imprime en pantalla para que se escoja la opcion de que libreria se va a usar
+    scanf("%d",&op);// se ingresa la  opcion para elegir la libreria a usar
     system("cls");
-    switch(op)
+    switch(op)// ingresa a la opcion elegida 
     {
+	// se utiliza la libreria imprimir
     case 1:
-
+		
         valor_registro(reg);
     break;
+// se utiliza la libreria instrucciones
     case 2:
         printf("ingrese los valores de los dos registros a operar\nvalor del primer registro 1:\t");
         scanf("%d",&a);
@@ -24,7 +29,7 @@ int main()
         printf("escoja los valores para probar las funciones\n1:\tadd\n2:\tsub\n3:\tMov\n4:\tAnd\n5:\tEor\n6:\tOrr\n");
         scanf("%d",&oc);
         system("cls");
-        switch(oc)
+        switch(oc) // se elige la operacion que se va a realizar con los registros
         {
         case 1:
          v=add(a, b);
@@ -51,7 +56,8 @@ int main()
             break;
         }
         printf("el resusltado de la operacion es: %d\n\nBanderas:\nN: %d\nZ: %d\nC: %d\nV: %d\n",v, regf[0],regf[1],regf[2],regf[3]);
-        break;
+       // muestra el resultado de la operacion
+	 break;
     }
 
     return 0;
