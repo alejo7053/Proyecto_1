@@ -1,36 +1,38 @@
 /**
 * \brief titulo
-* \n prototipo de la funcion  suma que  va a operar los registros 
+* \n prototipo de la funcion  suma que  va a operar los registros
 */
-
-long int Suma(long int a, long int b);
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+uint32_t add(uint32_t a, uint32_t b);
 
 /**
-*  prototipo de la funcion  resta que  va a operar los registros 
+*  prototipo de la funcion  resta que  va a operar los registros
 */
 
-long int Resta(long int a, long int b);
+uint32_t sub(uint32_t a, uint32_t b);
 
 /**
-*  prototipo de la funcion  mover que  va a operar los registros 
+*  prototipo de la funcion  mover que  va a operar los registros
 */
 
-long int Mover(long int b);
+uint32_t Mov( uint32_t b);
 
 /**
-*  prototipo de la funcion  And que  va a operar los registros 
+*  prototipo de la funcion  And que  va a operar los registros
 */
 
-long int And(long int a, long int b);
+uint32_t And(uint32_t a, uint32_t b);
 
 /**
-*  prototipo de la funcion  Eor que  va a operar los registros 
+*  prototipo de la funcion  Eor que  va a operar los registros
 */
 
-long int Eor(long int a, long int b);
+uint32_t Eor(uint32_t a, uint32_t b);
 
 /**
-*  prototipo de la funcion  Orr que  va a operar los registros 
+*  prototipo de la funcion  Orr que  va a operar los registros
 */
 
-long int Orr(long int a, long int b);
+uint32_t Orr(uint32_t a, uint32_t b);

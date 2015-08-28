@@ -1,31 +1,31 @@
 #include "instrucciones.h"
 
-long int Suma(long int a, long int b)
+uint32_t add(uint32_t a, uint32_t b)
 {
     return a+b;
 }
 
-long int Resta(long int a, long int b)
+uint32_t sub(uint32_t a, uint32_t b)
 {
     return a-b;
 }
 
-long int Mover(long int b)
+uint32_t Mov(uint32_t b)
 {
     return b;
 }
 
-long int And(long int a, long int b)
+uint32_t And(uint32_t a, uint32_t b)
 {
     return a&b;
 }
 
-long int Eor(long int a, long int b)
+uint32_t Eor(uint32_t a, uint32_t b)
 {
     return a^b;
 }
 
-long int Orr(long int a, long int b)
+uint32_t Orr(uint32_t a, uint32_t b)
 {
     return a|b;
 }
