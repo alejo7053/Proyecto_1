@@ -4,14 +4,14 @@
 /**
 *\brief
   <center><b>TEXT</b></center> \n
-  <b><small>Este archivo es para probar las librerias</small></b>  
+  <b><small>Este archivo es para probar las librerias.</small></b>  
 */
 int main()
 {
     uint32_t reg[12], v,a,b; //declaracion de variables tipo unsigned long int
     char regf[4], *f=regf;//orden regf: N,Z,C,V
     int op,oc; // declaracion de variables tipo int
-    printf("escoja la libreria a probar\n1:\t para probar libreria imprimir\n2:\tpara probar libreria instrucciones\n3:\tpara pribar libreria instrucciones de desplazamiento\n");// imprime en pantalla para que se escoja la opcion de que libreria se va a usar
+    printf("escoja la libreria a probar\n1:\t para probar libreria imprimir\n2:\tpara probar libreria instrucciones\n3:\tpara probar libreria instrucciones de desplazamiento\n");// imprime en pantalla para que se escoja la opcion de que libreria se va a usar
     scanf("%d",&op);// se ingresa la  opcion para elegir la libreria a usar
     system("cls");
     switch(op)// ingresa a la opcion elegida 
@@ -70,6 +70,8 @@ int main()
         }
         printf("el resusltado de la operacion es: %d\n\nBanderas:\nN: %d\nZ: %d\nC: %d\nV: %d\n",v, regf[0],regf[1],regf[2],regf[3]);
        // muestra el resultado de la operacion
+
+        //libreria instrucciones de desplazamiento
 	case 3:
 	printf("ingrese los valores de los dos registros a operar\nvalor del primer registro 1:\t");
         scanf("%d",&a);
