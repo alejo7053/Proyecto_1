@@ -1,5 +1,6 @@
 #include "imprimir.h"
 #include "instrucciones.h"
+#include "instruc_desplazamiento.h"
 /**
 *\brief
   <center><b>TEXT</b></center> \n
@@ -75,7 +76,7 @@ int main()
         printf("\nvalor del segundo registro 2:\t");
         scanf("%d",&b);
 		printf("Recuerde que en algunas funciones de desplazamiento el valor del primer\nregistro es el registro a operar y valor del segundo es el valor operando");
-		printf("\n asi tambien como hay funciones que solo necesitan el valor del primer registro para operar\n escoja la funcion siguiendo los terminos pasados")
+		printf("\n asi tambien como hay funciones que solo necesitan el valor del primer registro para operar\n escoja la funcion siguiendo los terminos pasados");
 		printf("\nescoja los valores para probar las funciones\n1:\tLSL\n2:\tLSR\n3:\tROR\n4:\tASR\n5:\tBIC\n6:\tMVN\n7:\tRSB\n8:\tREV\n9:\tREVG\n10:\tREVSH");
         scanf("%d",&oc);
         system("cls");
@@ -100,7 +101,7 @@ int main()
              v=MVN(a);
             break;
 		case 7:
-              v=RSV(a);
+              v=RSB(a);
             break;
         case 8:
              v=REV(a);

@@ -34,7 +34,7 @@ return a;
          a=a+d;
        }
 
-     return a;
+     return a; 
  }
  uint32_t BIC(uint32_t a, uint32_t b)
  {
