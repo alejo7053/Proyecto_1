@@ -1,35 +1,29 @@
 #include "imprimir.h"
 #include "instrucciones.h"
-/**
-*\brief
-  <center><b>TEXT</b></center> \n
-  <b><small>Este archivo es para probar las librerias.</small></b>  
-*/
+//el siguiente archivo es para probar las librerias hechas
+//para mantenerlas en una carpeta aparte
 int main()
 {
-    uint32_t reg[12], v,a,b; //declaracion de variables tipo unsigned long int
+    uint32_t reg[12], v,a,b;
     char regf[4], *f=regf;//orden regf: N,Z,C,V
-    int op,oc; // declaracion de variables tipo int
-    printf("escoja la libreria a probar\n1:\t para probar libreria imprimir\n2:\tpara probar libreria instrucciones\n");// imprime en pantalla para que se escoja la opcion de que libreria se va a usar
-    scanf("%d",&op);// se ingresa la  opcion para elegir la libreria a usar
+    int op,oc;
+    printf("escoja la libreria a probar\n1:\t para probar libreria imprimir\n2:\tpara probar libreria instrucciones\n");
+    scanf("%d",&op);
     system("cls");
-    switch(op)// ingresa a la opcion elegida 
+    switch(op)
     {
-	// se utiliza la libreria imprimir
     case 1:
-		
         valor_registro(reg);
     break;
-// se utiliza la libreria instrucciones
     case 2:
         printf("ingrese los valores de los dos registros a operar\nvalor del primer registro 1:\t");
         scanf("%d",&a);
         printf("\nvalor del segundo registro 2:\t");
         scanf("%d",&b);
-        printf("escoja los valores para probar las funciones\n1:\tadd\n2:\tsub\n3:\tMov\n4:\tAnd\n5:\tEor\n6:\tOrr\n");
+        printf("escoja los valores para probar las funciones\n1:\tadd\n2:\tsub\n3:\tMov\n4:\tAnd\n5:\tEor\n6:\tOrr\n7:\tCMN\n8:\tCMP\n9:\tMUL\n10:\tTST");
         scanf("%d",&oc);
         system("cls");
-        switch(oc) // se elige la operacion que se va a realizar con los registros
+        switch(oc)
         {
         case 1:
          v=add(a, b);
@@ -54,10 +48,21 @@ int main()
              v=Orr(a, b);
              flags(a,b,v,f);
             break;
+        case 7:
+             CMN(a,b,f);
+            break;
+        case 8:
+             CMP(a, b, f);
+            break;
+        case 9:
+             v=MUL(a, b, f);
+            break;
+        case 10:
+             TST(a, b, f);
+            break;
         }
         printf("el resusltado de la operacion es: %d\n\nBanderas:\nN: %d\nZ: %d\nC: %d\nV: %d\n",v, regf[0],regf[1],regf[2],regf[3]);
-       // muestra el resultado de la operacion
-	 break;
+        break;
     }
 
     return 0;
