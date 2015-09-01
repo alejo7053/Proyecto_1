@@ -8,7 +8,7 @@
 */
 int main()
 {
-    uint32_t reg[12], v,a,b; //declaracion de variables tipo unsigned long int
+    uint32_t reg[12], v=0,a,b; //declaracion de variables tipo unsigned long int
     char regf[4], *f=regf;//orden regf: N,Z,C,V
     int op,oc; // declaracion de variables tipo int
     printf("escoja la libreria a probar\n1:\t para probar libreria imprimir\n2:\tpara probar libreria instrucciones\n3:\tpara probar libreria instrucciones de desplazamiento\n");// imprime en pantalla para que se escoja la opcion de que libreria se va a usar

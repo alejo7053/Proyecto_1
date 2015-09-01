@@ -3,7 +3,7 @@
 
 void flags(uint32_t a, uint32_t b, uint32_t c, char *p) //declaracion del tipo de la funcion void y variables tipo unsigned long int y char el puntero
 {
-    uint32_t aux=2147483648;
+    uint32_t aux=2147483648UL;
     //Bandera N
     if(c<aux)
     {
@@ -65,7 +65,6 @@ void TST(uint32_t a, uint32_t b, char *p)
 
 uint32_t add(uint32_t a, uint32_t b) //declaracion del tipo de la funcion y variables tipo unsigned long int 
 {
-{
     return a+b; // operacion suma  que se realiza y su retorno
 }
 
@@ -73,7 +72,7 @@ uint32_t sub(uint32_t a, uint32_t b)
 {
     return a-b;// operacion mover  que se realiza y su retorno
 }
-}
+
 
 uint32_t Mov(uint32_t b)
 {

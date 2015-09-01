@@ -6,35 +6,36 @@ uint32_t LSL(uint32_t a, uint32_t b)
 }
 uint32_t LSR(uint32_t a, uint32_t b)
 {
-a=a>>b;
-return a;
+	a=a>>b;
+	return a;
 }
 uint32_t ROR(uint32_t a,uint32_t b)
 {
     uint32_t j,k;
     int t;
-j=a>>b;
-t=32-b;
-k=a<<t;
-a=j+k;
-return a;
+	
+	j=a>>b;
+	t=32-b;
+	k=a<<t;
+	a=j+k;
+	
+	return a;
 }
  uint32_t ASR(uint32_t a,uint32_t b)
- { unsigned d=0;
-     int t;
-     t=a>>31;
-     if(t==0)
-     {
-       a=a>>b;
-     }
-       else
-       {
-           a=a>>b;
-         d=~d<<b;
-         a=a+d;
-       }
-
-     return a; 
+ { 
+	unsigned d=0;
+	int t;
+	t=a>>31;
+	if(t==0)
+		a=a>>b;
+	else
+	{
+		a=a>>b;
+		d=~d<<b;
+		a=a+d;
+	}
+		
+	return a; 
  }
  uint32_t BIC(uint32_t a, uint32_t b)
  {
