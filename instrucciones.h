@@ -65,7 +65,7 @@ void TST(uint32_t a, uint32_t b, char *p);
   \param b <small>operando ingresaaado</small> \n
   \return  <small>retorna  el resultado de la ADD</small> \n
 */
-uint32_t add(uint32_t a, uint32_t b);
+uint32_t add(uint32_t Rd, uint32_t Rm);
 
 /**
 *\brief                          
@@ -75,7 +75,7 @@ uint32_t add(uint32_t a, uint32_t b);
  \param  b <small>operando ingresado</small> \n
  \return <small>retorna  el resultado de la SUB</small> \n
 */
-uint32_t sub(uint32_t a, uint32_t b);
+uint32_t sub(uint32_t Rd, uint32_t Rm);
 
 /**
 *\brief  
@@ -84,7 +84,7 @@ uint32_t sub(uint32_t a, uint32_t b);
  \param  b <small>operando ingresado</small> \n 
  \return <small>retorna  el resultado de la operacion MOV</small> \n 
 */
-uint32_t Mov( uint32_t b);
+uint32_t Mov( uint32_t Rdn);
 
 
 /**
@@ -95,7 +95,7 @@ uint32_t Mov( uint32_t b);
  \param  b <small>operando ingresado</small> 
  \return <small>retorna  el resultado de la operacion AND</small>
 */
-uint32_t And(uint32_t a, uint32_t b);
+uint32_t And(uint32_t Rd, uint32_t Rm);
 
 /**
 *\brief 
@@ -105,7 +105,7 @@ uint32_t And(uint32_t a, uint32_t b);
  \param  b <small>operando ingresado</small> 
  \return <small>retorna  el resultado de la operacion EOR</small>
 */
-uint32_t Eor(uint32_t a, uint32_t b);
+uint32_t Eor(uint32_t Rdn, uint32_t Rm);
 
 
 /**
@@ -116,4 +116,4 @@ uint32_t Eor(uint32_t a, uint32_t b);
  \param b <small>operando ingresado</small> 
  \return <small>retorna  el resultado de la operacion ORR</small>
 */
-uint32_t Orr(uint32_t a, uint32_t b);
+uint32_t Orr(uint32_t Rd, uint32_t Rm);

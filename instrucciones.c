@@ -63,33 +63,33 @@ void TST(uint32_t a, uint32_t b, char *p)
     flags(a, b, a&b, p);
 }
 
-uint32_t add(uint32_t a, uint32_t b) //declaracion del tipo de la funcion y variables tipo unsigned long int 
+uint32_t add(uint32_t Rd, uint32_t Rm) //declaracion del tipo de la funcion y variables tipo unsigned long int 
 {
-    return a+b; // operacion suma  que se realiza y su retorno
+    return Rd+Rm; // operacion suma  que se realiza y su retorno
 }
 
-uint32_t sub(uint32_t a, uint32_t b)
+uint32_t sub(uint32_t Rd, uint32_t Rm)
 {
-    return a-b;// operacion mover  que se realiza y su retorno
+    return Rd-Rm;// operacion mover  que se realiza y su retorno
 }
 
 
-uint32_t Mov(uint32_t b)
+uint32_t Mov(uint32_t Rdn)
 {
-    return b; // operacion mover  que se realiza y su retorno
+    return Rdn; // operacion mover  que se realiza y su retorno
 }
 
-uint32_t And(uint32_t a, uint32_t b)
+uint32_t And(uint32_t Rd, uint32_t Rm)
 {
-    return a&b; // operacion And  que se realiza y su retorno
+    return Rd&Rm; // operacion And  que se realiza y su retorno
 }
 
-uint32_t Eor(uint32_t a, uint32_t b)
+uint32_t Eor(uint32_t Rd, uint32_t Rm)
 {
-    return a^b; // operacion Eor  que se realiza y su retorno
+    return Rd^Rm; // operacion Eor  que se realiza y su retorno
 }
 
-uint32_t Orr(uint32_t a, uint32_t b)
+uint32_t Orr(uint32_t Rd, uint32_t Rm)
 {
-    return a|b;// operacion Oor  que se realiza y su retorno
+    return Rd|Rm;// operacion Oor  que se realiza y su retorno
 }
