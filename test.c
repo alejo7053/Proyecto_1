@@ -1,6 +1,7 @@
 #include "imprimir.h"
 #include "instrucciones.h"
 #include "instruc_desplazamiento.h"
+#include <curses.h>
 /**
 *\brief
   <center><b>TEXT</b></center> \n
@@ -18,7 +19,6 @@ int main()
     {
 	// se utiliza la libreria imprimir
     case 1:
-		
         valor_registro(reg);
     break;
 // se utiliza la libreria instrucciones
@@ -33,42 +33,43 @@ int main()
         switch(oc) // se elige la operacion que se va a realizar con los registros
         {
         case 1:
-         v=add(a, b);
-         flags(a,b,v,f);
+			v=add(a, b);
+			flags(a,b,v,f);
             break;
         case 2:
-         v=sub(a, b);
-         flags(a,b,v,f);
+			v=sub(a, b);
+			flags(a,b,v,f);
             break;
         case 3:
-             v=Mov(b);
+            v=Mov(b);
             break;
         case 4:
-             v=And(a, b);
-             flags(a,b,v,f);
+            v=And(a, b);
+            flags(a,b,v,f);
             break;
         case 5:
-             v=Eor(a, b);
-             flags(a,b,v,f);
+            v=Eor(a, b);
+            flags(a,b,v,f);
             break;
         case 6:
-             v=Orr(a, b);
-             flags(a,b,v,f);
+            v=Orr(a, b);
+            flags(a,b,v,f);
             break;
 		case 7:
-             CMN(a,b,f);
+            CMN(a,b,f);
             break;
         case 8:
-             CMP(a, b, f);
+            CMP(a, b, f);
             break;
         case 9:
-             v=MUL(a, b, f);
+            v=MUL(a, b, f);
             break;
         case 10:
-             TST(a, b, f);
+            TST(a, b, f);
             break;
         }
         printf("el resusltado de la operacion es: %d\n\nBanderas:\nN: %d\nZ: %d\nC: %d\nV: %d\n",v, regf[0],regf[1],regf[2],regf[3]);
+	break;
        // muestra el resultado de la operacion
 
         //libreria instrucciones de desplazamiento

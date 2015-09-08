@@ -1,3 +1,4 @@
 Doc/*
 *.o
 *.exe
+*.dll

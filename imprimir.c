@@ -2,8 +2,8 @@
 void valor_registro( uint32_t  valores[])
 {
     int i;
-    for(i=0;i<12;i++)
+    for(i=0;i<13;i++)
     {
-        printf("Registro %d: %d\n",i,valores[i]);
+        mvprintw(6+i,1,"R%d: %d",i,valores[i]);
     }
 }
