@@ -59,7 +59,7 @@ uint32_t BIC(uint32_t Rdn, uint32_t Rm);
   \param a <small>operando ingresado</small> \n
   \return  <small>retorna  el resultado de la operacion MVN</small> \n
 */
-uint32_t MVN(uint32_t Rdn;
+uint32_t MVN(uint32_t Rdn);
 
 /**
 *\brief     
