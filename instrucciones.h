@@ -1,9 +1,6 @@
-
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-
 
 /**
 *\brief  
@@ -55,8 +52,6 @@ uint32_t MUL(uint32_t a, uint32_t b, char *p);
   */
 void TST(uint32_t a, uint32_t b, char *p);
 
-
-
 /**
 *\brief     
   <center><b>ADD</b></center>  \n  
@@ -86,7 +81,6 @@ uint32_t sub(uint32_t Rd, uint32_t Rm);
 */
 uint32_t Mov( uint32_t Rdn);
 
-
 /**
 *\brief  
  <center><b>AND</b></center> \n
@@ -106,7 +100,6 @@ uint32_t And(uint32_t Rd, uint32_t Rm);
  \return <small>retorna  el resultado de la operacion EOR</small>
 */
 uint32_t Eor(uint32_t Rdn, uint32_t Rm);
-
 
 /**
 *\brief
