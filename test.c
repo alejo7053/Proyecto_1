@@ -2,6 +2,11 @@
 #include "instrucciones.h"
 #include "instruc_desplazamiento.h"
 #include <curses.h>
+#define N 0
+#define Z 1
+#define C 2
+#define V 3
+
 /**
 *\brief
  <center><b>TEXT</b></center> \n
@@ -27,38 +32,33 @@ int main()
 		scanf("%d",&a);
 		printf("\nvalor del segundo registro 2:\t");	
 		scanf("%d",&b);
-		printf("escoja los valores para probar las funciones\n1:\tadd\n2:\tsub\n3:\tMov\n4:\tAnd\n5:\tEor\n6:\tOrr\n7:\tCMN\n8:\tCMP\n9:\tMUL\n10:\tTST");	
+		printf("escoja los valores para probar las funciones\n1:\tADD\n2:\tSUB\n3:\tMOV\n4:\tAND\n5:\tEor\n6:\tOrr\n7:\tCMN\n8:\tCMP\n9:\tMUL\n10:\tTST");	
 		scanf("%d",&oc);		
 		system("cls");
 		switch(oc) // se elige la operacion que se va a realizar con los registros
 		{
 		case 1:		
-			v=add(a, b);
-			flags(a,b,v,f);
+			v=ADD(a, b, f);
 			break;
 		
 		case 2:
-			v=sub(a, b);
-			flags(a,b,v,f);
+			v=SUB(a, b, f);
 			break;
 		
 		case 3:
-			v=Mov(b);
+			v=MOV(b, f);
 			break;
         
 		case 4:
-			v=And(a, b);	
-			flags(a,b,v,f);
+			v=AND(a, b, f);	
 			break;
         
 		case 5:
-			v=Eor(a, b);
-			flags(a,b,v,f);
+			v=EOR(a, b, f);
 			break;
 		
 		case 6:
-			v=Orr(a, b);
-			flags(a,b,v,f);
+			v=ORR(a, b, f);
 			break;
 		
 		case 7:
@@ -77,7 +77,7 @@ int main()
 			TST(a, b, f);
 			break;
 		}
-		printf("el resusltado de la operacion es: %d\n\nBanderas:\nN: %d\nZ: %d\nC: %d\nV: %d\n",v, regf[0],regf[1],regf[2],regf[3]);
+		printf("el resusltado de la operacion es: %d\n\nBanderas:\nN: %d\nZ: %d\nC: %d\nV: %d\n",v, regf[N],regf[Z],regf[C],regf[V]);
 		break;
 		// muestra el resultado de la operacion
         //libreria instrucciones de desplazamiento
@@ -94,31 +94,31 @@ int main()
 			switch(oc) // se elige la operacion que se va a realizar con los registros
 			{
 			case 1:	
-				v=LSL(a,b);
+				v=LSL(a,b, f);
 				break;
 				
 			case 2:
-				v=LSR(a,b);
+				v=LSR(a,b, f);
 				break;
 			
 			case 3:
-				v=ROR(a,b);
+				v=ROR(a,b, f);
 				break;
 			
 			case 4:
-				v=ASR(a,b);
+				v=ASR(a,b, f);
 				break;
 			
 			case 5:
-				v=BIC(a,b);
+				v=BIC(a,b, f);
 				break;
 			
 			case 6:
-				v=MVN(a);
+				v=MVN(a, f);
 				break;
 			
 			case 7:
-				v=RSB(a);
+				v=RSB(a, f);
 				break;
 			
 			case 8:

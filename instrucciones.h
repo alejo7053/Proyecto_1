@@ -82,7 +82,7 @@ uint32_t SUB(uint32_t Rn, uint32_t Rm,char *dir_flags);
  \param  Rdn <small>operando ingresado</small> \n 
  \return <small>retorna  el resultado de la operacion MOV</small> \n 
 */
-uint32_t MOV( uint32_t Rn);
+uint32_t MOV( uint32_t Rn, char *dir_flags);
 
 /**
 *\brief  
