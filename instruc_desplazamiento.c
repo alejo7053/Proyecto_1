@@ -1,4 +1,8 @@
 #include "instruc_desplazamiento.h"
+#define N 0
+#define Z 1
+#define C 2
+#define V 3
 
 uint32_t LSL(uint32_t Rdn, uint32_t Rm, *char *dir_flags)
 {
