@@ -1,94 +1,166 @@
 #include "instrucciones.h"
+#define N 0
+#define Z 1
+#define C 2
+#define V 3
 
-void flags(uint32_t a, uint32_t b, uint32_t c, char *p) 
+void flags(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flags) 
 //declaracion del tipo de la funcion void y variables tipo unsigned long int y char el puntero
 {
 	uint32_t aux=2147483648UL;
 	//Bandera N
-	if(c<aux)
+	if(Rd<aux)
 	{
-		*p=0;
+		*dir_flags[N]=0;
 	}
 	else
 	{
-		*p=1;
+		*dir_flags[N]=1;
 	}
 	//Bandera Z
-	if(c==0)
+	if(Rd==0)
 	{
-		*(p+1)=1;
+		*dir_flags[Z]=1;
 	}
 	else
 	{
-		*(p+1)=0;
+		*dir_flags[Z]=0;
 	}
 	//Bandera C
-	if(((a>=aux) & (b<aux) & (c<aux))||((b>=aux) & (a<aux) & (c<aux))||((a>=aux) & (b>=aux)))
+	if(((Rn>=aux) & (Rm<aux) & (Rd<aux))||((Rm>=aux) & (Rn<aux) & (Rd<aux))||((Rn>=aux) & (Rm>=aux)))
 	{
-		*(p+2)=1;
+		*dir_flags[C]=1;
 	}
 	else
 	{
-		*(p+2)=0;
+		*dir_flags[C]=0;
 	}
 	//Bandera V
-	if(((a>=aux) & (b>=aux) & (c<aux))||((a<aux) & (b<aux)) & (c>=aux))
+	if(((Rn>=aux) & (Rm>=aux) & (Rd<aux))||((Rn<aux) & (Rm<aux)) & (Rd>=aux))
 	{
-		*(p+3)=1;
+		*dir_flags[V]=1;
 	}
 	else
 	{
-		*(p+3)=0;
+		*dir_flags[V]=0;
 	}
 }
 
-void CMN(uint32_t a, uint32_t b, char *p)
+void flag_N(uint32_t Rd, char *dir_flag_N)
 {
-	flags(a, b, a+b, p);
+	uint32_t aux=2147483648UL;
+	if(Rd<aux)
+	{
+		*dir_flag_N=0;
+	}
+	else
+	{
+		*dir_flag_N=1;
+	}
 }
 
-void CMP(uint32_t a, uint32_t b, char *p)
+void flag_Z(uint32_t Rd, char *dir_flag_Z)
 {
-	flags(a, b, a-b, p);
+	uint32_t aux=2147483648UL;
+	if(Rd==0)
+	{
+		*dir_flag_Z=1;
+	}
+	else
+	{
+		*dir_flag_Z=0;
+	}	
 }
 
-uint32_t MUL(uint32_t a, uint32_t b, char *p)
+void flag_C(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_C)
 {
-	flags(a, b, a*b, p);
-	return a*b;
+	uint32_t aux=2147483648UL;
+	if(((Rn>=aux) & (Rm<aux) & (Rd<aux))||((Rm>=aux) & (Rn<aux) & (Rd<aux))||((Rn>=aux) & (Rm>=aux)))
+	{
+		*dir_flag_C=1;
+	}
+	else
+	{
+		*dir_flag_C=0;
+	}
 }
 
-void TST(uint32_t a, uint32_t b, char *p)
+void flag_V(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_V)
 {
-	flags(a, b, a&b, p);
+	uint32_t aux=2147483648UL;
+	if(((Rn>=aux) & (Rm>=aux) & (Rd<aux))||((Rn<aux) & (Rm<aux)) & (Rd>=aux))
+	{
+		*dir_flag_V=1;
+	}
+	else
+	{
+		*dir_flag_V=0;
+	}
 }
 
-uint32_t add(uint32_t Rd, uint32_t Rm) //declaracion del tipo de la funcion y variables tipo unsigned long int 
+void CMN(uint32_t Rn, uint32_t Rm, char *dir_flags)
 {
-	return Rd+Rm; // operacion suma  que se realiza y su retorno
+	flags(Rn, Rm, Rn+Rm, dir_flags);
 }
 
-uint32_t sub(uint32_t Rd, uint32_t Rm)
+void CMP(uint32_t Rn, uint32_t Rm, char *dir_flags)
 {
-	return Rd-Rm;// operacion mover  que se realiza y su retorno
+	flags(Rn, Rm, Rn-Rm, dir_flags);
 }
 
-uint32_t Mov(uint32_t Rdn)
+uint32_t MUL(uint32_t Rn, uint32_t Rm, char *dir_flags)
 {
-	return Rdn; // operacion mover  que se realiza y su retorno
+	flag_N(Rn*Rm, dir_flags[N]);
+	flag_Z(Rn*Rm, dir_flags[Z]);
+	return Rn*Rm;
 }
 
-uint32_t And(uint32_t Rd, uint32_t Rm)
+void TST(uint32_t Rn, uint32_t Rm, char *dir_flags)
 {
-	return Rd&Rm; // operacion And  que se realiza y su retorno
+	flag_N(Rn&Rm, dir_flags[N]);
+	flag_Z(Rn&Rm, dir_flags[Z]);
+	flag_C(Rn, Rm, Rn&Rm, dir_flags[C]);
 }
 
-uint32_t Eor(uint32_t Rd, uint32_t Rm)
+uint32_t ADD(uint32_t Rn, uint32_t Rm, char *dir_flags) //declaracion del tipo de la funcion y variables tipo unsigned long int 
 {
-	return Rd^Rm; // operacion Eor  que se realiza y su retorno
+	flags(Rn, Rm, Rn+Rm, dir_flags);
+	return Rn+Rm; // operacion suma  que se realiza y su retorno
 }
 
-uint32_t Orr(uint32_t Rd, uint32_t Rm)
+uint32_t SUB(uint32_t Rn, uint32_t Rm,char *dir_flags)
 {
-	return Rd|Rm;// operacion Oor  que se realiza y su retorno
+	flags(Rn, Rm, Rn-Rm, dir_flags);
+	return Rn-Rm;// operacion mover  que se realiza y su retorno
+}
+
+uint32_t MOV(uint32_t Rn,char *dir_flags)
+{
+	flag_N(Rn,dir_flags[N]); //Revisar
+	flag_Z(Rn,dir_flags[Z]); //Revisar
+	return Rn; // operacion mover  que se realiza y su retorno
+}
+
+uint32_t AND(uint32_t Rn, uint32_t Rm, char *dir_flags)
+{
+	flag_N(Rn&Rm, dir_flags[N]);
+	flag_Z(Rn&Rm, dir_flags[Z]);
+	flag_C(Rn, Rm, Rn&Rm, dir_flags[C]);
+	return Rn&Rm; // operacion And  que se realiza y su retorno
+}
+
+uint32_t EOR(uint32_t Rn, uint32_t Rm, char *dir_flags)
+{
+	flag_N(Rn^Rm, dir_flags[N]);
+	flag_Z(Rn^Rm, dir_flags[Z]);
+	flag_C(Rn, Rm, Rn^Rm, dir_flags[C]);
+	return Rn^Rm; // operacion Eor  que se realiza y su retorno
+}
+
+uint32_t ORR(uint32_t Rn, uint32_t Rm, char *dir_flags)
+{
+	flag_N(Rn|Rm, dir_flags[N]);
+	flag_Z(Rn|Rm, dir_flags[Z]);
+	flag_C(Rn, Rm, Rn|Rm, dir_flags[C]);
+	return Rn|Rm;// operacion Oor  que se realiza y su retorno
 }

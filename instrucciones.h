@@ -10,8 +10,11 @@
  \param  b <small>operando ingresado</small> \n 
  \param  p <small> puntero hacia  arreglo regf.</small> \n 
 */
-void flags(uint32_t a, uint32_t b, uint32_t c, char *p);
-
+void flags(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flags);
+void flag_N(uint32_t Rd, char *dir_flag_N);
+void flag_Z(uint32_t Rd, char *dir_flag_Z);
+void flag_C(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_C);
+void flag_V(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_V);
 /**
 *\brief  
   <center><b>CMN</b></center> \n  
@@ -20,7 +23,7 @@ void flags(uint32_t a, uint32_t b, uint32_t c, char *p);
  \param  b <small>operando ingresado</small> \n 
  \param  p <small>puntero hacia  arreglo regf.</small> \n
   */
-void CMN(uint32_t a, uint32_t b, char *p);
+void CMN(uint32_t Rn, uint32_t Rm, char *dir_flags);
 /**
 *\brief  
   <center><b>CMP</b></center> \n  
@@ -29,7 +32,7 @@ void CMN(uint32_t a, uint32_t b, char *p);
  \param  b <small>operando ingresado</small> \n 
  \param  p <small>puntero hacia  arreglo regf.> \n
   */
-void CMP(uint32_t a, uint32_t b, char *p);
+void CMP(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
 /**
 *\brief  
@@ -40,7 +43,7 @@ void CMP(uint32_t a, uint32_t b, char *p);
  \param  p <small>puntero hacia  arreglo regf.> \n
  \return <small>retorna  el resultado de la operacion de las MUL</small> \n 
 */
-uint32_t MUL(uint32_t a, uint32_t b, char *p);
+uint32_t MUL(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
 /**
 *\brief  
@@ -50,7 +53,7 @@ uint32_t MUL(uint32_t a, uint32_t b, char *p);
  \param  b <small>operando ingresado</small> \n 
  \param  p <small>puntero hacia  arreglo regf.</small> \n
   */
-void TST(uint32_t a, uint32_t b, char *p);
+void TST(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
 /**
 *\brief     
@@ -60,7 +63,7 @@ void TST(uint32_t a, uint32_t b, char *p);
   \param Rm <small>operando ingresaaado</small> \n
   \return  <small>retorna  el resultado de la ADD</small> \n
 */
-uint32_t add(uint32_t Rd, uint32_t Rm);
+uint32_t ADD(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
 /**
 *\brief                          
@@ -70,7 +73,7 @@ uint32_t add(uint32_t Rd, uint32_t Rm);
  \param  Rm <small>operando ingresado</small> \n
  \return <small>retorna  el resultado de la SUB</small> \n
 */
-uint32_t sub(uint32_t Rd, uint32_t Rm);
+uint32_t SUB(uint32_t Rn, uint32_t Rm,char *dir_flags);
 
 /**
 *\brief  
@@ -79,7 +82,7 @@ uint32_t sub(uint32_t Rd, uint32_t Rm);
  \param  Rdn <small>operando ingresado</small> \n 
  \return <small>retorna  el resultado de la operacion MOV</small> \n 
 */
-uint32_t Mov( uint32_t Rdn);
+uint32_t MOV( uint32_t Rn);
 
 /**
 *\brief  
@@ -89,7 +92,7 @@ uint32_t Mov( uint32_t Rdn);
  \param  Rm <small>operando ingresado</small> 
  \return <small>retorna  el resultado de la operacion AND</small>
 */
-uint32_t And(uint32_t Rd, uint32_t Rm);
+uint32_t AND(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
 /**
 *\brief 
@@ -99,7 +102,7 @@ uint32_t And(uint32_t Rd, uint32_t Rm);
  \param  Rm <small>operando ingresado</small> 
  \return <small>retorna  el resultado de la operacion EOR</small>
 */
-uint32_t Eor(uint32_t Rdn, uint32_t Rm);
+uint32_t EOR(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
 /**
 *\brief
@@ -109,4 +112,4 @@ uint32_t Eor(uint32_t Rdn, uint32_t Rm);
  \param Rm <small>operando ingresado</small> 
  \return <small>retorna  el resultado de la operacion ORR</small>
 */
-uint32_t Orr(uint32_t Rd, uint32_t Rm);
+uint32_t ORR(uint32_t Rn, uint32_t Rm, char *dir_flags);

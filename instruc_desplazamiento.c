@@ -1,56 +1,77 @@
 #include "instruc_desplazamiento.h"
 
-uint32_t LSL(uint32_t Rdn, uint32_t Rm)
+uint32_t LSL(uint32_t Rdn, uint32_t Rm, *char *dir_flags)
 {
+	flag_N(Rdn<<Rm, dir_flags[N]);
+	flag_Z(Rdn<<Rm, dir_flags[Z]);
+	flag_C(Rdn, Rm, Rdn<<Rm, dir_flags[C]);
 	Rdn=Rdn<<Rm;
 	return Rdn;
 }
 
-uint32_t LSR(uint32_t Rdn, uint32_t Rm)
+uint32_t LSR(uint32_t Rdn, uint32_t Rm,char *dir_flags)
 {
+	flag_N(Rdn>>Rm, dir_flags[N]);
+	flag_Z(Rdn>>Rm, dir_flags[Z]);
+	flag_C(Rdn, Rm, Rdn>>Rm, dir_flags[C]);
 	Rdn=Rdn>>Rm;
 	return Rdn;
 }
 
-uint32_t ROR(uint32_t Rdn,uint32_t Rm)
+uint32_t ROR(uint32_t Rdn,uint32_t Rm, char *dir_flags)
 {
 	uint32_t j,k;
 	int t;
 	j=Rdn>>Rm;
 	t=32-Rm;
 	k=Rdn<<t;
+	flag_N(j+k, dir_flags[N]);
+	flag_Z(j+k, dir_flags[Z]);
+	flag_C(Rdn, Rm,j+k, dir_flags[C]);
 	Rdn=j+k;
 	return Rdn;
 }
 
-uint32_t ASR(uint32_t Rdn,uint32_t Rm)
+uint32_t ASR(uint32_t Rdn,uint32_t Rm, char *dir_flags)
 {
-	unsigned d=0;
+	uint32_t d=0,Rn=0;
 	int t;		
 	t=Rdn>>31;			
-	if(t==0)				
+	if(t==0)	
+		flag_N(Rdn>>Rm, dir_flags[N]);
+		flag_Z(Rdn>>Rm, dir_flags[Z]);
+		flag_C(Rdn, Rm,Rdn>>Rm, dir_flags[C]);
 		Rdn=Rdn>>Rm;		
 	else
 	{
-		Rdn=Rdn>>Rm;
+		Rn=Rdn>>Rm;
 		d=~d<<Rm;
-		Rdn=Rdn+d;
+		flag_N(Rn+d, dir_flags[N]);
+		flag_Z(Rn+d, dir_flags[Z]);
+		flag_C(Rdn, Rm,Rn+d, dir_flags[C]);
+		Rdn=Rn+d;
 	}
 	return Rdn;
 }
 
-uint32_t BIC(uint32_t Rdn, uint32_t Rm)
+uint32_t BIC(uint32_t Rdn, uint32_t Rm, char *dir_flags)
 {
+	flag_N(Rdn&(~Rm), dir_flags[N]);
+	flag_Z(Rdn&(~Rm), dir_flags[Z]);
+	flag_C(Rdn, Rm,Rdn&(~Rm), dir_flags[C]);
 	return Rdn&(~Rm);
 }
 
 uint32_t MVN(uint32_t Rdn)
 {
+	flag_N(Rdn,dir_flags[N]);
+	flag_Z(Rdn,dir_flags[Z]);
 	return ~Rdn;
 }
 
 uint32_t RSB(uint32_t Rdn)
 {
+	flags(,,,dir_flags);
 	return ~Rdn+1;
 }
 
