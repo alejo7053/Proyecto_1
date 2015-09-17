@@ -10,7 +10,6 @@
  \param  Rm <small>operando ingresado</small> \n
  \param  Rd <small>operando ingresado</small> \n 
  \param  dir_flags <small> puntero que tiene la direccion de las banderas</small> \n 
-  \return <small>retorna  el resultado de la operacion flags</small>
 */
 void flags(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flags);
 
@@ -22,7 +21,6 @@ void flags(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flags);
   <small>prototipo de la funcion  flag_N que  va a operar los registros</small> \n   
  \param  Rd <small>operando ingresado</small> \n
  \param  dir_flag_N <small> puntero que tiene la direccion de las banderas</small> \n 
-  \return <small>retorna  el resultado de la operacion flag_N</small>
 */
 void flag_N(uint32_t Rd, char *dir_flag_N);
 
@@ -33,7 +31,6 @@ void flag_N(uint32_t Rd, char *dir_flag_N);
   <small>prototipo de la funcion  flag_z que  va a operar los registros</small> \n   
  \param  Rd <small>operando ingresado</small> \n
  \param  dir_flag_z <small> puntero que tiene la direccion de las banderas</small> \n 
-  \return <small>retorna  el resultado de la operacion flag_Z</small>
 */
 void flag_Z(uint32_t Rd, char *dir_flag_Z);
 
@@ -46,7 +43,6 @@ void flag_Z(uint32_t Rd, char *dir_flag_Z);
  \param  Rm <small>operando ingresado</small> \n
  \param  Rd <small>operando ingresado</small> \n 
  \param  dir_flag_c <small> puntero que tiene la direccion de las banderas</small> \n 
-  \return <small>retorna  el resultado de la operacion flag_C</small>
 */
 void flag_C(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_C);
 
@@ -59,7 +55,6 @@ void flag_C(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_C);
  \param  Rm <small>operando ingresado</small> \n
  \param  Rd <small>operando ingresado</small> \n 
   \param  dir_flag_v <small> puntero que tiene la direccion de las banderas</small> \n 
-  \return <small>retorna  el resultado de la operacion flag_v</small>
 */
 void flag_V(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_V);
 /**
@@ -69,9 +64,9 @@ void flag_V(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_V);
  \param  Rn <small>operando ingresado</small> \n
  \param  Rm <small>operando ingresado</small> \n 
  \param  dir_flags <small>puntero que tiene la direccion de las banderas</small> \n
- \return <small>retorna  el resultado de la operacion CMN</small>
  */
 void CMN(uint32_t Rn, uint32_t Rm, char *dir_flags);
+
 /**
 *\brief  
   <center><b>CMP</b></center> \n  
@@ -79,7 +74,6 @@ void CMN(uint32_t Rn, uint32_t Rm, char *dir_flags);
  \param  Rn <small>operando ingresado</small> \n
  \param  Rm <small>operando ingresado</small> \n 
  \param  dir_flags <small>puntero que tiene la direccion de las banderas</small> \n
- \return <small>retorna  el resultado de la operacion CMP</small>
  */
 void CMP(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
@@ -100,8 +94,7 @@ uint32_t MUL(uint32_t Rn, uint32_t Rm, char *dir_flags);
   <small>prototipo de la funcion  TST que  va a operar los registros</small> \n   
  \param  Rn <small>operando ingresado</small> \n
  \param  Rm <small>operando ingresado</small> \n 
- \param  dir_flags <small>puntero que tiene la direccion de las banderas</small> \n
-  \return <small>retorna  el resultado de la operacion TST</small> 
+ \param  dir_flags <small>puntero que tiene la direccion de las banderas</small> \n 
  */
 void TST(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
