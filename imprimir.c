@@ -11,4 +11,5 @@ void valor_registro( uint32_t  valores[])
 	}
 	mvprintw(6+i,1,"LR:  %d",valores[i]);
 	mvprintw(7+i,1,"PC:  %d",valores[i+1]);
-}
+	
+	}
