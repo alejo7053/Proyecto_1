@@ -109,6 +109,8 @@ void TST(uint32_t Rn, uint32_t Rm, char *dir_flags);
 */
 uint32_t ADD(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
+uint32_t ADC(uint32_t Rn, char *dir_flags);
+
 /**
 *\brief                          
   <center><b>SUB</b></center>  \n
@@ -119,6 +121,8 @@ uint32_t ADD(uint32_t Rn, uint32_t Rm, char *dir_flags);
   \return <small>retorna  el resultado de la SUB</small> \n
 */
 uint32_t SUB(uint32_t Rn, uint32_t Rm,char *dir_flags);
+
+uint32_t SBC(uint32_t Rn, char *dir_flags);
 
 /**
 *\brief  
