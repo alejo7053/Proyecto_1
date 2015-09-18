@@ -166,3 +166,5 @@ uint32_t EOR(uint32_t Rn, uint32_t Rm, char *dir_flags);
  \return <small>retorna  el resultado de la operacion ORR</small>
 */
 uint32_t ORR(uint32_t Rn, uint32_t Rm, char *dir_flags);
+
+void NOP(uint32_t *dir_reg);

@@ -3,6 +3,7 @@
 #define Z 1
 #define C 2
 #define V 3
+#define PC 15
 
 void flags(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flags) 
 //declaracion del tipo de la funcion void y variables tipo unsigned long int y char el puntero
@@ -95,7 +96,7 @@ uint32_t ADD(uint32_t Rn, uint32_t Rm, char *dir_flags) //declaracion del tipo d
 	return Rn+Rm; // operacion suma  que se realiza y su retorno
 }
 
-uint32_t ADC(uint32_t Rn, char *dir_flags)
+uint32_t ADC(uint32_t Rn, char *dir_flags) //MODIFICAR SUMA 2 REGISTROS Y LES SUMA EL CARRY IGUAL EN RESTA CON CARRY
 {
 	char aux;
 	aux=dir_flags[C];
@@ -103,9 +104,6 @@ uint32_t ADC(uint32_t Rn, char *dir_flags)
 	flag_Z(Rn+aux, &dir_flags[Z]);
 	flag_C(Rn,aux,Rn+aux, &dir_flags[C]);
 	return Rn+aux;
-	
-	
-	return Rd;
 }
 
 uint32_t SUB(uint32_t Rn, uint32_t Rm,char *dir_flags)
@@ -153,4 +151,9 @@ uint32_t ORR(uint32_t Rn, uint32_t Rm, char *dir_flags)
 	flag_Z(Rn|Rm, &dir_flags[Z]);
 	flag_C(Rn, Rm, Rn|Rm, &dir_flags[C]);
 	return Rn|Rm;// operacion Oor  que se realiza y su retorno
+}
+
+void NOP(uint32_t *dir_reg)
+{
+	dir_reg[PC]++;
 }
