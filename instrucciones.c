@@ -98,12 +98,10 @@ uint32_t ADD(uint32_t Rn, uint32_t Rm, char *dir_flags) //declaracion del tipo d
 
 uint32_t ADC(uint32_t Rn, char *dir_flags) //MODIFICAR SUMA 2 REGISTROS Y LES SUMA EL CARRY IGUAL EN RESTA CON CARRY
 {
-	char aux;
-	aux=dir_flags[C];
-	flag_N(Rn+aux, &dir_flags[N]);
-	flag_Z(Rn+aux, &dir_flags[Z]);
-	flag_C(Rn,aux,Rn+aux, &dir_flags[C]);
-	return Rn+aux;
+	flag_N(Rn+Rm+dir_flags[C], &dir_flags[N]);
+	flag_Z(Rn+Rm+dir_flags[C], &dir_flags[Z]);
+	flag_C(Rn,Rm,Rn+Rm, &dir_flags[C]);
+	return Rn+Rm+dir_flags[C];
 }
 
 uint32_t SUB(uint32_t Rn, uint32_t Rm,char *dir_flags)
@@ -114,12 +112,8 @@ uint32_t SUB(uint32_t Rn, uint32_t Rm,char *dir_flags)
 
 uint32_t SBC(uint32_t Rn, char *dir_flags)
 {
-	char aux;
-	aux=dir_flags[C];
-	flag_N(Rn-aux, &dir_flags[N]);
-	flag_Z(Rn-aux, &dir_flags[Z]);
-	flag_C(Rn,aux,Rn-aux, &dir_flags[C]);
-	return Rn-aux;
+	flags(Rn,Rm,Rn+(~Rm), dir_flags)
+	return Rn+(~Rm)+dir_flags[C];
 	
 }
 uint32_t MOV(uint32_t Rn, char *dir_flags)
