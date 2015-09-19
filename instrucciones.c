@@ -99,9 +99,7 @@ uint32_t ADD(uint32_t Rn, uint32_t Rm, char *dir_flags) //declaracion del tipo d
 uint32_t ADC(uint32_t Rn,uint32_t Rm, char *dir_flags) 
 {
 	uint32_t aux=Rn+Rm+dir_flags[C];
-	flag_N(aux, &dir_flags[N]);
-	flag_Z(aux, &dir_flags[Z]);
-	flag_C(Rn,Rm,aux, &dir_flags[C]);
+	flags(Rn,Rm,aux, dir_flags);
 	return aux;
 }
 
