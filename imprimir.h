@@ -6,6 +6,5 @@
 *\brief     
   <b><center>valor_registro</center></b>  \n  
   <small>prototipo de la funcion valor_registro que muestra el valor que tienen los registros</small> 
-\return  <small>retorna  el valor del registro</small>  \n
 */
 void valor_registro( uint32_t valores[]);

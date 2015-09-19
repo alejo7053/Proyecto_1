@@ -1,11 +1,12 @@
 #include "instruc_desplazamiento.h"
+/* Macros para asignacion de las banderas */
 #define N 0
 #define Z 1
 #define C 2
 #define V 3
 
-// funciones de desplazamiento
-uint32_t LSL(uint32_t Rdn, uint32_t Rm, char *dir_flags)
+//funciones de desplazamiento
+uint32_t LSL(uint32_t Rdn, uint32_t Rm, char *dir_flags)	//Desplazamiento Logico a la izquierda
 {
 	uint32_t j;
 	flag_N(Rdn<<Rm, &dir_flags[N]);
@@ -19,7 +20,7 @@ uint32_t LSL(uint32_t Rdn, uint32_t Rm, char *dir_flags)
 	return Rdn;
 }
 
-uint32_t LSR(uint32_t Rdn, uint32_t Rm,char *dir_flags)
+uint32_t LSR(uint32_t Rdn, uint32_t Rm,char *dir_flags)	//Desplazamiento logico a la derecha
 {
 	uint32_t j;
 	flag_N(Rdn>>Rm, &dir_flags[N]);

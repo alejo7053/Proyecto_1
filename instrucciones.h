@@ -5,7 +5,7 @@
 /**
 *\brief  
   <center><b>flags</b></center> \n  
-  <small>prototipo de la funcion  flags que  va a operar los registros</small> \n   
+  <small>prototipo de la funcion  flags que va a operar los registros de las banderas</small> \n   
  \param  Rn <small>operando ingresado</small> \n
  \param  Rm <small>operando ingresado</small> \n
  \param  Rd <small>operando ingresado</small> \n 
@@ -18,7 +18,7 @@ void flags(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flags);
 /**
 *\brief  
   <center><b>flag_N</b></center> \n  
-  <small>prototipo de la funcion  flag_N que  va a operar los registros</small> \n   
+  <small>prototipo de la funcion  flag_N que va a operar el registro de la bandera N</small> \n   
  \param  Rd <small>operando ingresado</small> \n
  \param  dir_flag_N <small> puntero que tiene la direccion de las banderas</small> \n 
 */
@@ -27,34 +27,34 @@ void flag_N(uint32_t Rd, char *dir_flag_N);
 
 /**
 *\brief  
-  <center><b>flag_z</b></center> \n  
-  <small>prototipo de la funcion  flag_z que  va a operar los registros</small> \n   
+  <center><b>flag_Z</b></center> \n  
+  <small>prototipo de la funcion  flag_Z que va a operar el registro de la bandera Z</small> \n   
  \param  Rd <small>operando ingresado</small> \n
- \param  dir_flag_z <small> puntero que tiene la direccion de las banderas</small> \n 
+ \param  dir_flag_Z <small> puntero que tiene la direccion de las banderas</small> \n 
 */
 void flag_Z(uint32_t Rd, char *dir_flag_Z);
 
 
 /**
 *\brief  
-  <center><b>flag_c</b></center> \n  
-  <small>prototipo de la funcion  flag_c que  va a operar los registros</small> \n   
+  <center><b>flag_C</b></center> \n  
+  <small>prototipo de la funcion  flag_C que va a operar el registro de la bandera C</small> \n   
  \param  Rn <small>operando ingresado</small> \n
  \param  Rm <small>operando ingresado</small> \n
  \param  Rd <small>operando ingresado</small> \n 
- \param  dir_flag_c <small> puntero que tiene la direccion de las banderas</small> \n 
+ \param  dir_flag_C <small> puntero que tiene la direccion de las banderas</small> \n 
 */
 void flag_C(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_C);
 
 
 /**
 *\brief  
-  <center><b>flag_v</b></center> \n  
-  <small>prototipo de la funcion  flag_v que  va a operar los registros</small> \n   
+  <center><b>flag_V</b></center> \n  
+  <small>prototipo de la funcion  flag_V que va a operar el registro de la bandera V</small> \n   
  \param  Rn <small>operando ingresado</small> \n
  \param  Rm <small>operando ingresado</small> \n
  \param  Rd <small>operando ingresado</small> \n 
-  \param  dir_flag_v <small> puntero que tiene la direccion de las banderas</small> \n 
+  \param  dir_flag_V <small> puntero que tiene la direccion de las banderas</small> \n 
 */
 void flag_V(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flag_V);
 /**
@@ -79,7 +79,7 @@ void CMP(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
 /**
 *\brief  
-  <center><MUL>flags</b></center> \n  
+  <center><b>MUL</b></center> \n  
   <small>prototipo de la funcion  MUL que  va a operar los registros</small> \n   
  \param  Rn <small>operando ingresado</small> \n
  \param  Rm <small>operando ingresado</small> \n 
@@ -109,6 +109,15 @@ void TST(uint32_t Rn, uint32_t Rm, char *dir_flags);
 */
 uint32_t ADD(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
+/**
+*\brief     
+  <center><b>ADC</b></center>  \n  
+  <small>prototipo de la funcion  ADC que  va a operar los registros</small>  \n
+  \param Rn <small>operando ingresado</small> \n
+  \param Rm <small>operando ingresaaado</small> \n
+   \param  dir_flags <small>puntero que tiene la direccion de las banderas</small> \n
+  \return  <small>retorna  el resultado de la ADC</small> \n
+*/
 uint32_t ADC(uint32_t Rn,uint32_t Rm, char *dir_flags);
 
 /**
@@ -122,6 +131,15 @@ uint32_t ADC(uint32_t Rn,uint32_t Rm, char *dir_flags);
 */
 uint32_t SUB(uint32_t Rn, uint32_t Rm,char *dir_flags);
 
+/**
+*\brief     
+  <center><b>SBC</b></center>  \n  
+  <small>prototipo de la funcion  SBC que  va a operar los registros</small>  \n
+  \param Rn <small>operando ingresado</small> \n
+  \param Rm <small>operando ingresaaado</small> \n
+   \param  dir_flags <small>puntero que tiene la direccion de las banderas</small> \n
+  \return  <small>retorna  el resultado de la SBC</small> \n
+*/
 uint32_t SBC(uint32_t Rn,uint32_t Rm, char *dir_flags);
 
 /**
@@ -167,4 +185,10 @@ uint32_t EOR(uint32_t Rn, uint32_t Rm, char *dir_flags);
 */
 uint32_t ORR(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
+/**
+*\brief
+  <center><b>NOP</b></center> \n
+  <small>prototipo de la funcion  NOP que  va a operar los registros</small>
+  \param  dir_reg <small>puntero que tiene la direccion de los registros</small> \n
+*/
 void NOP(uint32_t *dir_reg);

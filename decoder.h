@@ -1,4 +1,4 @@
-#ifndef _DECODER_H_
+﻿#ifndef _DECODER_H_
 #define	_DECODER_H_
 
 #include <stdlib.h>
@@ -18,13 +18,13 @@ typedef struct
 
 typedef struct
 {
-	char mnemonic[10];
-	char op1_type;
-	char op2_type;
-	char op3_type;
-	uint32_t op1_value;
-	uint32_t op2_value;
-	uint32_t op3_value;
+	char mnemonic[10]; //Guarda la instruccion
+	char op1_type;	//Guarda tipo de operando , registro o inmediato
+	char op2_type;	//Guarda tipo de operando , registro o inmediato
+	char op3_type;	//Guarda tipo de operando , registro o inmediato
+	uint32_t op1_value;	//Guarda valor de operando , registro o inmediato
+	uint32_t op2_value;	//Guarda valor de operando , registro o inmediato
+	uint32_t op3_value;	//Guarda valor de operando , registro o inmediato
 }instruction_t;
 
 
@@ -36,7 +36,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 
 /** \fn instruction_t getInstruction(char* instStr)
     \brief Obtiene la instrucción separada por partes.
-    \param instrStr cadena que contiene la instrucción.
+    \param instStr cadena que contiene la instrucción.
 	\return instruction_t la instrucción separada por partes.
 */
 instruction_t getInstruction(char* instStr);

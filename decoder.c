@@ -3,6 +3,7 @@
 
 void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_flags)
 {
+	/* Comparacion de mnemonic y Llamado de las funciones */
 	int op=3;
 	if( strcmp(instruction.mnemonic,"ADC") == 0 || strcmp(instruction.mnemonic,"ADCS") == 0){
 		dir_reg[PC]++;
@@ -250,7 +251,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 		BAL(instruction.op1_value, dir_reg);
 	}
 	
-	switch(op) //Imprime las instrucciones
+	switch(op) //Imprime las instrucciones de acuerdo a la cantidad de parametros 1, 2 o 3
 	{
 	case 1:
 		if(instruction.op1_type=='#')

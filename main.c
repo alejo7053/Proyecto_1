@@ -52,29 +52,29 @@ int main(void)
 	instructions = read.array; /* Arreglo con las instrucciones */
 	//---------------------------//	
 	
-	
+	//ciclo para leer e imprimir las instrucciones, termina al presionar la tecla Q
 	while(ch!='q'&&ch!='Q'){
 		
-		if(ch=='a'||ch=='A'){
+		if(ch=='a'||ch=='A'){	//Presiona tecla A y se inicia el modo automatico
 			timeout(500);
 			ch2='a';
 		}
 		
-		if(ch=='p'||ch=='P'){
+		if(ch=='p'||ch=='P'){	//Presiona tecla P y se inicia modo paso a paso
 			timeout(-1);
 			ch2='p';
 		}
 		
-		if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'){
+		if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'){	//Solo se ejecuta con las teclas indicadas
 			erase();
 			
 			border( ACS_VLINE, ACS_VLINE, 
 					ACS_HLINE, ACS_HLINE, 
 					ACS_ULCORNER, ACS_URCORNER,
-					ACS_LLCORNER, ACS_LRCORNER);
+					ACS_LLCORNER, ACS_LRCORNER);	//dibuja los bordes
 			
-			instruction = getInstruction(instructions[dir_reg[PC]]);
-			decodeInstruction(instruction, dir_reg, dir_flags); // Debe ser modificada de acuerdo a cada código
+			instruction = getInstruction(instructions[dir_reg[PC]]);	//Obtiene la instruccion de acuerdo al registro PC
+			decodeInstruction(instruction, dir_reg, dir_flags); 
 			
 			mvprintw(2,30,"EMULADOR CORTEX-M0");
 			attron(COLOR_PAIR(2));
@@ -91,7 +91,7 @@ int main(void)
 			refresh();
 			attroff(COLOR_PAIR(1));	/* DEshabilita los colores Pair 1 */
 		}
-		ch=getch();
+		ch=getch();	//lee caracter del teclado
 		if(ch=='r'||ch=='R') //Presionando la tecla R reinicia la ejecucion del codigo
 		{
 			for(i=0;i<16;i++)
