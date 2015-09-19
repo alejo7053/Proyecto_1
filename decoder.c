@@ -177,6 +177,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	
 	if( strcmp(instruction.mnemonic,"BEQ") == 0 ){
 		op=1;
+		BEQ(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BNE") == 0 ){
@@ -186,6 +187,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	
 	if( strcmp(instruction.mnemonic,"BCS") == 0 ){
 		op=1;
+		BCS(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BCC") == 0 ){
@@ -195,46 +197,57 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	
 	if( strcmp(instruction.mnemonic,"BMI") == 0 ){
 		op=1;
+		BMI(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BPL") == 0 ){
 		op=1;
+		BPL(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BVS") == 0 ){
 		op=1;
+		BVS(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BVC") == 0 ){
 		op=1;
+		BVC(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BHI") == 0 ){
 		op=1;
+		BHI(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BLS") == 0 ){
 		op=1;
+		BLS(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BGE") == 0 ){
 		op=1;
+		BGE(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BLT") == 0 ){
 		op=1;
+		BLT(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BGT") == 0 ){
 		op=1;
+		BGT(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BLE") == 0 ){
 		op=1;
+		BLE(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BAL") == 0 ){
 		op=1;
+		BAL(instruction.op1_value, dir_reg);
 	}
 	
 	switch(op) //Imprime las instrucciones

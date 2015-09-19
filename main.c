@@ -4,6 +4,7 @@
 #include "instruc_desplazamiento.h"
 #include "salto.h"
 #include "decoder.h"
+#include <time.h>
 #define N 0
 #define Z 1
 #define C 2
@@ -13,10 +14,10 @@
 
 int main(void)
 {
-	uint32_t R[16], *dir_reg=R;
+	uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
 	int i=0;
-	char APSR[4], *dir_flags=APSR, ch=0;//orden Banderas APSR: N,Z,C,V
-	for(i=0;i<16;i++)
+	char APSR[4], *dir_flags=APSR, ch=0, ch2='a';//orden Banderas APSR: N,Z,C,V
+	for(i=0;i<16;i++) //inicializacion de registro y banderas en 0
 	{
 		R[i]=0;
 		if(i>=0&&i<4)
@@ -29,9 +30,9 @@ int main(void)
 	keypad(stdscr, TRUE);	/* Obtener F1, F2, etc */
 	noecho();		/* No imprimir los caracteres leidos */
 	start_color();	/* Permite manejar colores */
-	init_pair(1, COLOR_WHITE, COLOR_BLACK);
-	init_pair(2,COLOR_RED, COLOR_BLACK);
-	init_pair(3,COLOR_GREEN, COLOR_BLACK);
+	init_pair(1, COLOR_WHITE, COLOR_BLACK); //Color texto blanco, fondo negro
+	init_pair(2,COLOR_RED, COLOR_BLACK); //Color texto rojo, fondo negro
+	init_pair(3,COLOR_GREEN, COLOR_BLACK); //Color texto verde, fondo negro
 
 	attron(COLOR_PAIR(1));	/* Activa el color verde para el 
 							   texto y negro para el fondo Pair 1*/
@@ -50,41 +51,48 @@ int main(void)
 
 	instructions = read.array; /* Arreglo con las instrucciones */
 	//---------------------------//	
-
-	/* Ejemplo de uso 
-		Llama la función que separa el mnemonico y los operandos
-		Llama la instrucción que decodifica y ejecuta la instrucción
-	*/
-	// Esto debe ser ciclico para la lectura de todas las instrucciones, de acuerdo
-	// al valor del PC (Program Counter)
-	i=0;
+	
+	
 	while(ch!='q'&&ch!='Q'){
-		border( ACS_VLINE, ACS_VLINE, 
-			ACS_HLINE, ACS_HLINE, 
-			ACS_ULCORNER, ACS_URCORNER,
-			ACS_LLCORNER, ACS_LRCORNER);
+		
+		if(ch=='a'||ch=='A'){
+			timeout(500);
+			ch2='a';
+		}
+		
+		if(ch=='p'||ch=='P'){
+			timeout(-1);
+			ch2='p';
+		}
+		
+		if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'){
+			erase();
 			
-		instruction = getInstruction(instructions[dir_reg[PC]]);
-		decodeInstruction(instruction, dir_reg, dir_flags); // Debe ser modificada de acuerdo a cada código
-
-		mvprintw(2,30,"EMULADOR CORTEX-M0");
-		attron(COLOR_PAIR(2));
-		valor_registro(R);
-		attroff(COLOR_PAIR(2));
-		attron(COLOR_PAIR(3));
-		mvprintw(6,50,"Banderas");
-		mvprintw(8,50,"N: %d",APSR[N]);
-		mvprintw(9,50,"Z: %d",APSR[Z]);
-		mvprintw(10,50,"C: %d",APSR[C]);
-		mvprintw(11,50,"V: %d",APSR[V]);
-		attroff(COLOR_PAIR(3));
-		mvprintw(23,7,"P: Paso a Paso\tC: Completo\tQ: Salir\tR: Reiniciar");
-		refresh();
-		attroff(COLOR_PAIR(1));	/* DEshabilita los colores Pair 1 */
+			border( ACS_VLINE, ACS_VLINE, 
+					ACS_HLINE, ACS_HLINE, 
+					ACS_ULCORNER, ACS_URCORNER,
+					ACS_LLCORNER, ACS_LRCORNER);
+			
+			instruction = getInstruction(instructions[dir_reg[PC]]);
+			decodeInstruction(instruction, dir_reg, dir_flags); // Debe ser modificada de acuerdo a cada código
+			
+			mvprintw(2,30,"EMULADOR CORTEX-M0");
+			attron(COLOR_PAIR(2));
+			valor_registro(R);
+			attroff(COLOR_PAIR(2));
+			attron(COLOR_PAIR(3));
+			mvprintw(6,50,"Banderas");
+			mvprintw(8,50,"N: %d",APSR[N]);
+			mvprintw(9,50,"Z: %d",APSR[Z]);
+			mvprintw(10,50,"C: %d",APSR[C]);
+			mvprintw(11,50,"V: %d",APSR[V]);
+			attroff(COLOR_PAIR(3));
+			mvprintw(23,7,"P: Paso a Paso\tA: Automatico\tQ: Salir\tR: Reiniciar");
+			refresh();
+			attroff(COLOR_PAIR(1));	/* DEshabilita los colores Pair 1 */
+		}
 		ch=getch();
-		while(ch!='q'&&ch!='Q'&&ch!='r'&&ch!='R'&&ch!='c'&&ch!='C'&&ch!='P'&&ch!='p')
-			ch=getch();
-		if(ch=='r'||ch=='R')
+		if(ch=='r'||ch=='R') //Presionando la tecla R reinicia la ejecucion del codigo
 		{
 			for(i=0;i<16;i++)
 			{
@@ -93,8 +101,8 @@ int main(void)
 					APSR[i]=0;
 			}
 		}
-		erase();
 	}
+	
 
 		//------- No modificar ------//	
 	/* Libera la memoria reservada para las instrucciones */ //ERROR LA LIBERAR MEMORIA
