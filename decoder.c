@@ -171,7 +171,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	}
 	
 	if( strcmp(instruction.mnemonic,"BX") == 0 ){
-		op=1;
+		op=4;
 		BX(dir_reg);
 	}
 	

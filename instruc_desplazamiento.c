@@ -9,7 +9,6 @@ uint32_t LSL(uint32_t Rdn, uint32_t Rm, char *dir_flags)
 {
 	uint32_t j;
 	flag_N(Rdn<<Rm, &dir_flags[N]);
-	
 	flag_Z(Rdn<<Rm, &dir_flags[Z]);
 	j=(Rdn<<(Rm-1)&(1<<31));
 	if(j==0)

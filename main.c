@@ -95,7 +95,6 @@ int main(void)
 		}
 		erase();
 	}
-	endwin();	/* Finaliza el modo curses */
 
 		//------- No modificar ------//	
 	/* Libera la memoria reservada para las instrucciones */ //ERROR LA LIBERAR MEMORIA
@@ -104,5 +103,6 @@ int main(void)
 	}	
 	free(read.array);
 	//---------------------------//
+	endwin();	/* Finaliza el modo curses */
 	return 0;
 }
