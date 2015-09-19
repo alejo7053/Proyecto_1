@@ -7,46 +7,66 @@
 // funciones de desplazamiento
 uint32_t LSL(uint32_t Rdn, uint32_t Rm, char *dir_flags)
 {
+	uint32_t j;
 	flag_N(Rdn<<Rm, &dir_flags[N]);
+	
 	flag_Z(Rdn<<Rm, &dir_flags[Z]);
-	flag_C(Rdn, Rm, Rdn<<Rm, &dir_flags[C]);
+	j=(Rdn<<(Rm-1)&(1<<31));
+	if(j==0)
+		dir_flags[C]=0;
+	else
+		dir_flags[C]=1;
 	Rdn=Rdn<<Rm;
 	return Rdn;
 }
 
 uint32_t LSR(uint32_t Rdn, uint32_t Rm,char *dir_flags)
 {
+	uint32_t j;
 	flag_N(Rdn>>Rm, &dir_flags[N]);
 	flag_Z(Rdn>>Rm, &dir_flags[Z]);
-	flag_C(Rdn, Rm, Rdn>>Rm, &dir_flags[C]);
+	j=(Rdn>>(Rm-1)&(1));
+	if(j==0)
+		dir_flags[C]=0;
+	else
+		dir_flags[C]=1;
 	Rdn=Rdn>>Rm;
 	return Rdn;
 }
 
 uint32_t ROR(uint32_t Rdn,uint32_t Rm, char *dir_flags)
 {
-	uint32_t j,k;
+	uint32_t j,k,q;
 	int t;
 	j=Rdn>>Rm;
 	t=32-Rm;
 	k=Rdn<<t;
 	flag_N(j+k, &dir_flags[N]);
 	flag_Z(j+k, &dir_flags[Z]);
-	flag_C(Rdn, Rm,j+k, &dir_flags[C]);
+	q=(Rdn<<(Rm-1)&(1<<31));
+	if(q==0)
+		dir_flags[C]=0;
+	else
+		dir_flags[C]=1;
+	
 	Rdn=j+k;
 	return Rdn;
 }
 
 uint32_t ASR(uint32_t Rdn,uint32_t Rm, char *dir_flags)
 {
-	uint32_t d=0,Rn=0;
+	uint32_t d=0,Rn=0,j;
 	int t;
 	t=Rdn>>31;
 	if(t==0)
 	{
 		flag_N(Rdn>>Rm, &dir_flags[N]);
 		flag_Z(Rdn>>Rm, &dir_flags[Z]);
-		flag_C(Rdn, Rm,Rdn>>Rm, &dir_flags[C]);
+		j=(Rdn>>(Rm-1)&(1));
+	if(j==0)
+		dir_flags[C]=0;
+	else
+		dir_flags[C]=1;
 		Rdn=Rdn>>Rm;
 	}
 	else
@@ -55,7 +75,11 @@ uint32_t ASR(uint32_t Rdn,uint32_t Rm, char *dir_flags)
 		d=~d<<Rm;
 		flag_N(Rn+d, &dir_flags[N]);
 		flag_Z(Rn+d, &dir_flags[Z]);
-		flag_C(Rdn, Rm,Rn+d, &dir_flags[C]);
+		j=(Rdn>>(Rm-1)&(1));
+	if(j==0)
+		dir_flags[C]=0;
+	else
+		dir_flags[C]=1;
 		Rdn=Rn+d;
 	}
 	return Rdn;
