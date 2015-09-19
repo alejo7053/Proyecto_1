@@ -64,7 +64,7 @@ int main(void)
 			ACS_ULCORNER, ACS_URCORNER,
 			ACS_LLCORNER, ACS_LRCORNER);
 			
-		instruction = getInstruction(instructions[dir_reg[PC]]); // Instrucción en la posición 0
+		instruction = getInstruction(instructions[dir_reg[PC]]);
 		decodeInstruction(instruction, dir_reg, dir_flags); // Debe ser modificada de acuerdo a cada código
 
 		mvprintw(2,30,"EMULADOR CORTEX-M0");

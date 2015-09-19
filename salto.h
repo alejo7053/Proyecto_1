@@ -2,5 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char BNE(char *p);
-char BCC(char *p);
+void B(uint32_t label, uint32_t *dir_reg);
+void BL(uint32_t label, uint32_t *dir_reg);
+void BX(uint32_t *dir_reg);
+void BNE(uint32_t label, uint32_t *dir_reg, char *dir_flags);
+void BCC(uint32_t label, uint32_t *dir_reg, char *dir_flags);

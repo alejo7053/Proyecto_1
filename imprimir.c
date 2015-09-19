@@ -11,6 +11,6 @@ void valor_registro( uint32_t  valores[])
 			j++;
 		}
 	}
-	mvprintw(8+j,20,"LR:  %.10d",valores[i]);
+	mvprintw(8+j,20,"LR:  %.10d",valores[i]*2);
 	mvprintw(9+j,20,"PC:  %.10d",valores[i+1]*2);
 }

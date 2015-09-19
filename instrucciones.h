@@ -109,7 +109,7 @@ void TST(uint32_t Rn, uint32_t Rm, char *dir_flags);
 */
 uint32_t ADD(uint32_t Rn, uint32_t Rm, char *dir_flags);
 
-uint32_t ADC(uint32_t Rn,uint32_t, Rm char *dir_flags);
+uint32_t ADC(uint32_t Rn,uint32_t Rm, char *dir_flags);
 
 /**
 *\brief                          

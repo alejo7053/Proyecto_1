@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include "instrucciones.h"
 #include "instruc_desplazamiento.h"
+#include "salto.h"
 #include <curses.h>
 
 

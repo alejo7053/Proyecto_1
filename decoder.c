@@ -6,6 +6,10 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	int op=3;
 	if( strcmp(instruction.mnemonic,"ADC") == 0 || strcmp(instruction.mnemonic,"ADCS") == 0){
 		dir_reg[PC]++;
+		if(instruction.op3_type=='#')
+			dir_reg[instruction.op1_value]=ADC(dir_reg[instruction.op2_value], instruction.op3_value,dir_flags);
+		else
+			dir_reg[instruction.op1_value]=ADC(dir_reg[instruction.op2_value],dir_reg[instruction.op3_value],dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"ADDS") == 0 || strcmp(instruction.mnemonic,"ADD") == 0){
@@ -154,6 +158,83 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	if( strcmp(instruction.mnemonic,"NOP") == 0 ){
 		NOP(dir_reg);
 		op=5;
+	}
+	
+	if( strcmp(instruction.mnemonic,"B") == 0 ){
+		op=1;
+		B(instruction.op1_value, dir_reg);
+	}
+	
+	if( strcmp(instruction.mnemonic,"BL") == 0 ){
+		op=1;
+		BL(instruction.op1_value, dir_reg);
+	}
+	
+	if( strcmp(instruction.mnemonic,"BX") == 0 ){
+		op=1;
+		BX(dir_reg);
+	}
+	
+	if( strcmp(instruction.mnemonic,"BEQ") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BNE") == 0 ){
+		op=1;
+		BNE(instruction.op1_value, dir_reg, dir_flags);
+	}
+	
+	if( strcmp(instruction.mnemonic,"BCS") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BCC") == 0 ){
+		op=1;
+		BCC(instruction.op1_value, dir_reg, dir_flags);
+	}
+	
+	if( strcmp(instruction.mnemonic,"BMI") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BPL") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BVS") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BVC") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BHI") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BLS") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BGE") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BLT") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BGT") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BLE") == 0 ){
+		op=1;
+	}
+	
+	if( strcmp(instruction.mnemonic,"BAL") == 0 ){
+		op=1;
 	}
 	
 	switch(op) //Imprime las instrucciones
