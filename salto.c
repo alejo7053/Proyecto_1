@@ -8,13 +8,13 @@
 
 void B(uint32_t label, uint32_t *dir_reg)
 {
-	dir_reg[PC]=label;
+	dir_reg[PC]+=label;
 }
 
 void BL(uint32_t label, uint32_t *dir_reg)
 {
-	dir_reg[LR]=label+1;
-	dir_reg[PC]+=2;
+	dir_reg[LR]=dir_reg[PC]+2;
+	dir_reg[PC]+=label;
 }
 
 void BX(uint32_t *dir_reg)

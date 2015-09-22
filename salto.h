@@ -23,7 +23,7 @@ void BL(uint32_t label, uint32_t *dir_reg);
 /**
 *\brief  
   <center><b>BX</b></center> \n  
-  <small>prototipo de la funcion  BX que va a modificar el registro PC</small> \n    
+  <small>prototipo de la funcion  BX que va a modificar el registro PC</small> \n  
  \param  dir_reg <small> puntero que tiene la direccion de los registros</small> \n 
 */
 void BX(uint32_t *dir_reg);

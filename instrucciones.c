@@ -20,12 +20,12 @@ void flags(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flags) 	//Funcion qu
 	else
 		dir_flags[Z]=0;
 	//Modifica Bandera C
-	if(((Rn>=aux) & (Rm<aux) & (Rd<aux))||((Rm>=aux) & (Rn<aux) & (Rd<aux))||((Rn>=aux) & (Rm>=aux)))
+	if(((Rn>=aux) && (Rm<aux) && (Rd<aux))||((Rm>=aux) && (Rn<aux) && (Rd<aux))||((Rn>=aux) && (Rm>=aux)))
 		dir_flags[C]=1;
 	else
 		dir_flags[C]=0;
 	//Modifica Bandera V
-	if(((Rn>=aux) & (Rm>=aux) & (Rd<aux))||((Rn<aux) & (Rm<aux)) & (Rd>=aux))
+	if(((Rn>=aux) && (Rm>=aux) && (Rd<aux))||((Rn<aux) && (Rm<aux) && (Rd>=aux)))
 		dir_flags[V]=1;
 	else
 		dir_flags[V]=0;
@@ -73,7 +73,7 @@ void CMN(uint32_t Rn, uint32_t Rm, char *dir_flags)
 
 void CMP(uint32_t Rn, uint32_t Rm, char *dir_flags)
 {
-	flags(Rn, Rm, Rn+(~Rm + 1), dir_flags);
+	flags(Rn, (~Rm + 1), Rn+(~Rm + 1), dir_flags);
 }
 
 uint32_t MUL(uint32_t Rn, uint32_t Rm, char *dir_flags)
@@ -105,7 +105,7 @@ uint32_t ADC(uint32_t Rn,uint32_t Rm, char *dir_flags)
 
 uint32_t SUB(uint32_t Rn, uint32_t Rm,char *dir_flags)
 {
-	flags(Rn, Rm, Rn-Rm, dir_flags);
+	flags(Rn, (~Rm + 1), Rn+(~Rm + 1), dir_flags);
 	return Rn+(~Rm + 1);
 }
 
