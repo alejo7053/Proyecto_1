@@ -193,14 +193,18 @@ uint32_t ORR(uint32_t Rn, uint32_t Rm, char *dir_flags);
 */
 void NOP(uint32_t *dir_reg);
 
-
 /**
 *\brief
   <center><b>push</b></center> \n
-  <small>prototipo de la funcion  push que  va a operar los registros</small>
+  <small>prototipo de la funcion  push que  va a operar los registros guardando datos en memoria</small>
   \param  dir_reg <small>puntero que tiene la direccion de los registros</small> \n
 */
 void push(char *dir_reg);
 
-
-uint32_t bitcount(uint32_t R)
+/**
+*\brief
+  <center><b>bitcount</b></center> \n
+  <small>prototipo de la funcion  bitcount que  va a operar los registros contando cuantos estan en 1</small>
+  \param  R <small>Registros que va a operar la funcion</small> \n
+*/
+uint32_t bitcount(uint32_t R);

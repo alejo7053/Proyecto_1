@@ -151,52 +151,40 @@ void NOP(uint32_t *dir_reg)	//No hace nada durante un ciclo de reloj
 	dir_reg[PC]++;
 }
 
-
-
-
-
 //uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
-
-
 
 void push(uint32_t *dir_reg)
 {
-uint32_t R[16]=[0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1],address,sp;  
-uint8_t ram[40]; 
-sp=41;  // se ubica en la tamaño del arreglo (memoria) + 1
-address=sp-4*bitcount(R); //address queda en la posiccion 38
-
-
-for(i=0;R[i]<=14;i++)
-{
-if(R[i]==1)
-{
-ram[address]=(uint8_t)dir_reg[i]; 
-ram[address+1]=((uint8_t)dir_reg[i]>>8);
-ram[address+2]=((uint8_t)dir_reg[i]>>16);
-ram[address+3]=((uint8_t)dir_reg[i]>>24);
-adress+=4;         //
+	uint32_t R[16]=[0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1],address,sp;  
+	uint8_t ram[40]; 
+	sp=41;  // se ubica en la tamaño del arreglo (memoria) + 1
+	address=sp-4*bitcount(R); //address queda en la posiccion 38
+	for(i=0;R[i]<=14;i++)
+	{
+		if(R[i]==1)
+		{
+			ram[address]=(uint8_t)dir_reg[i]; 
+			ram[address+1]=((uint8_t)dir_reg[i]>>8);
+			ram[address+2]=((uint8_t)dir_reg[i]>>16);
+			ram[address+3]=((uint8_t)dir_reg[i]>>24);
+			adress+=4;         //
+		}
+	}
+	sp=sp-4*bitcount(R)  //
 }
-}
-sp=sp-4*bitcount(R)  //
-}
-
 
 uint32_t bitcount(uint32_t R)
 {
-int activos=0;
-
-
-	
+	int activos=0;
 	for(i=0;i<=15;i++)
 	{
 		if(i<=7||i==14)
-	{
-		if(R[i]==1)
-				{
+		{
+			if(R[i]==1)
+			{
 				activos++;
+			}
 		}
+	return activos;
 	}
-
-return activos;
 }
