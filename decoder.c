@@ -1,4 +1,4 @@
-#include "decoder.h"
+﻿#include "decoder.h"
 #define PC 15
 
 void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_flags)

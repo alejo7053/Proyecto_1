@@ -192,3 +192,15 @@ uint32_t ORR(uint32_t Rn, uint32_t Rm, char *dir_flags);
   \param  dir_reg <small>puntero que tiene la direccion de los registros</small> \n
 */
 void NOP(uint32_t *dir_reg);
+
+
+/**
+*\brief
+  <center><b>push</b></center> \n
+  <small>prototipo de la funcion  push que  va a operar los registros</small>
+  \param  dir_reg <small>puntero que tiene la direccion de los registros</small> \n
+*/
+void push(char *dir_reg);
+
+
+uint32_t bitcount(uint32_t R)
