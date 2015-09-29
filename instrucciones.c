@@ -189,3 +189,27 @@ uint32_t bitcount(int *R)
 	}
 	return activos;
 }
+
+void POP(uint8_t *SRAM, uint32_t *dir_reg, int *R_activos )
+{
+uint8_t address;
+int i;
+address=dir_reg[SP];
+for(i=0;R_activos[i]<=14;i++)
+{
+	if(R_activos[i]==1)
+	{
+	  (uint8_t)R_activos[i]=SRAM[address];
+	   ((uint8_t)R_activos[i]>>8)=SRAM[address+1];
+	   ((uint8_t)R_activos[i]>>16)=SRAM[address+2];
+	   ((uint8_t)R_activos[i]>>24)=SRAM[address+3];
+	}
+
+	  
+}
+     if(R_activos[15]==1)
+	 {
+		 //loadwritePC(SRAM[address,4]);
+		 dir_reg[SP]=dir_reg[SP]+4*bitcount(R_activos);
+	 }
+	}	

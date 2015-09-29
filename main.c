@@ -38,7 +38,7 @@ int main(void)
 	init_pair(2,COLOR_RED, COLOR_BLACK); //Color texto rojo, fondo negro
 	init_pair(3,COLOR_GREEN, COLOR_BLACK); //Color texto verde, fondo negro
 
-	attron(COLOR_PAIR(1));	/* Activa el color verde para el 
+	attron(COLOR_PAIR(1));	/* Activa el color blanco para el 
 							   texto y negro para el fondo Pair 1*/
 	//------- No modificar ------//	
 	int num_instructions;

@@ -208,3 +208,5 @@ void PUSH(uint8_t *SRAM, uint32_t *dir_reg, int *R_activos );
   \param  R <small>Registros que va a operar la funcion</small> \n
 */
 uint32_t bitcount(int *R);
+
+void POP(uint8_t *SRAM, uint32_t *dir_reg, int *R_activos );
