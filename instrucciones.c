@@ -199,10 +199,13 @@ for(i=0;R_activos[i]<=14;i++)
 {
 	if(R_activos[i]==1)
 	{
-	  (uint8_t)R_activos[i]=SRAM[address];
-	   ((uint8_t)R_activos[i]>>8)=SRAM[address+1];
-	   ((uint8_t)R_activos[i]>>16)=SRAM[address+2];
-	   ((uint8_t)R_activos[i]>>24)=SRAM[address+3];
+	  dir_reg[i]=SRAM[address+3];
+	   dir_reg[i]<<=8;
+	   dir_reg[i]=SRAM[address+2];
+	   dir_reg[i]<<=16;
+	   dir_reg[i]=SRAM[address+1];
+	   dir_reg[i]<<=24;
+	   dir_reg[i]=SRAM[address];
 	}
 
 	  
