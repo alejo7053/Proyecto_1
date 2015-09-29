@@ -195,18 +195,29 @@ void NOP(uint32_t *dir_reg);
 
 /**
 *\brief
-  <center><b>push</b></center> \n
-  <small>prototipo de la funcion  push que  va a operar los registros guardando datos en memoria</small>
-  \param  dir_reg <small>puntero que tiene la direccion de los registros</small> \n
+  <center><b>PUSH</b></center> \n
+  <small>prototipo de la funcion PUSH que va a operar los registros guardando datos en memoria</small>
+	\param  SRAM <small>puntero que tiene la direccion de SRAM</small> \n
+	\param  dir_reg <small>puntero que tiene la direccion de los registros</small> \n
+	\param  R_activos <small>puntero que tiene la direccion de los registros activos</small> \n
 */
 void PUSH(uint8_t *SRAM, uint32_t *dir_reg, int *R_activos );
 
 /**
 *\brief
   <center><b>bitcount</b></center> \n
-  <small>prototipo de la funcion  bitcount que  va a operar los registros contando cuantos estan en 1</small>
+  <small>prototipo de la funcion bitcount que va a operar los registros contando cuantos estan en 1</small>
   \param  R <small>Registros que va a operar la funcion</small> \n
+\return <small>retorna  el numero de registro activos</small>
 */
 uint32_t bitcount(int *R);
 
+/**
+*\brief
+  <center><b>POP</b></center> \n
+  <small>prototipo de la funcion POP que va a operar los registros contando cuantos estan en 1</small>
+  \param  SRAM <small>Registros de SRAM que va a operar la funcion</small> \n
+  \param  dir_reg <small>Puntero a registros</small> \n
+  \param  R_activos <small>puntero a registros activos</small> \n
+*/
 void POP(uint8_t *SRAM, uint32_t *dir_reg, int *R_activos );
