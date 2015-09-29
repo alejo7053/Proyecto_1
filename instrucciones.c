@@ -5,6 +5,8 @@
 #define C 2
 #define V 3
 #define PC 15
+#define LR 14
+#define SP 13
 
 void flags(uint32_t Rn, uint32_t Rm, uint32_t Rd, char *dir_flags) 	//Funcion que modifica las banderas
 {
@@ -153,29 +155,28 @@ void NOP(uint32_t *dir_reg)	//No hace nada durante un ciclo de reloj
 
 //uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
 
-void push(uint32_t *dir_reg)
-{
-	uint32_t R[16]=[0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1],address,sp;  
-	uint8_t ram[40]; 
-	sp=41;  // se ubica en la tamaño del arreglo (memoria) + 1
-	address=sp-4*bitcount(R); //address queda en la posiccion 38
-	for(i=0;R[i]<=14;i++)
+void PUSH(uint8_t *SRAM, uint32_t *dir_reg, int *R_activos )
+{  
+	 int i=0;  
+	uint8_t address=0;
+	address=dir_reg[SP]-4*bitcount(R_activos); //address queda en la posiccion 38
+	for(i=0;R_activos[i]<=14;i++)
 	{
-		if(R[i]==1)
+		if(R_activos[i]==1)
 		{
-			ram[address]=(uint8_t)dir_reg[i]; 
-			ram[address+1]=((uint8_t)dir_reg[i]>>8);
-			ram[address+2]=((uint8_t)dir_reg[i]>>16);
-			ram[address+3]=((uint8_t)dir_reg[i]>>24);
-			adress+=4;         //
+			SRAM[address]=(uint8_t)dir_reg[i]; 
+			SRAM[address+1]=((uint8_t)dir_reg[i]>>8);
+			SRAM[address+2]=((uint8_t)dir_reg[i]>>16);
+			SRAM[address+3]=((uint8_t)dir_reg[i]>>24);
+			address+=4;         
 		}
 	}
-	sp=sp-4*bitcount(R)  //
+	dir_reg[SP]=dir_reg[SP]-4*bitcount(R_activos);  //
 }
 
-uint32_t bitcount(uint32_t R)
+uint32_t bitcount(int *R)
 {
-	int activos=0;
+	int activos=0,i=0;
 	for(i=0;i<=15;i++)
 	{
 		if(i<=7||i==14)
@@ -185,6 +186,6 @@ uint32_t bitcount(uint32_t R)
 				activos++;
 			}
 		}
-	return activos;
 	}
+	return activos;
 }

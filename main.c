@@ -11,9 +11,13 @@
 #define V 3
 #define LR 14
 #define PC 15
+#define SP 13
+#define TAM_SRAM 40
 
 int main(void)
 {
+	uint8_t SRAM[TAM_SRAM];
+	int R_activos[16]={1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0};
 	uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
 	int i=0;
 	char APSR[4], *dir_flags=APSR, ch=0, ch2='a';//orden Banderas APSR: N,Z,C,V
@@ -23,7 +27,7 @@ int main(void)
 		if(i>=0&&i<4)
 			APSR[i]=0;
 	}
-	
+	dir_reg[SP]=TAM_SRAM+1;
 	initscr();		/* Inicia modo curses */
 	curs_set(0);	/* Cursor Invisible */
 	raw();			/* Activa modo raw */
