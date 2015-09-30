@@ -1,3 +1,14 @@
+/**
+	\def N
+		\brief Macro que define la posicion de la bandera \a \b N en el puntero \b dir_flags
+	\def Z
+		\brief Macro que define la posicion de la bandera \a \b Z en el puntero \b dir_flags
+	\def C
+		\brief Macro que define la posicion de la bandera \a \b C en el puntero \b dir_flags
+	\def V
+		\brief Macro que define la posicion de la bandera \a \b V en el puntero \b dir_flags
+*/
+
 #include "instruc_desplazamiento.h"
 /* Macros para asignacion de las banderas */
 #define N 0

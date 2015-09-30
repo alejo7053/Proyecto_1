@@ -1,3 +1,14 @@
+/**
+	\def N
+		\brief Macro que define la posicion de la bandera \a \b N en el registro\a \b regf
+	\def Z
+		\brief Macro que define la posicion de la bandera \a \b Z en el registro\a \b regf
+	\def C
+		\brief Macro que define la posicion de la bandera \a \b C en el registro \a \b regf
+	\def V
+		\brief Macro que define la posicion de la bandera \a \b V en el registro \a \b regf
+*/
+
 #include "imprimir.h"
 #include "instrucciones.h"
 #include "instruc_desplazamiento.h"

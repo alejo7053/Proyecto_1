@@ -1,4 +1,9 @@
-﻿#include "decoder.h"
+﻿/**
+	\def PC
+		\brief Macro que define la posicion del registro \a \b PC en el puntero \b dir_reg
+*/
+
+#include "decoder.h"
 #define PC 15
 
 void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_flags, uint8_t *SRAM)

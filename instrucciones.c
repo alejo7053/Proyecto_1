@@ -1,3 +1,20 @@
+/**
+	\def N
+		\brief Macro que define la posicion de la bandera \a \b N en el puntero \b dir_flags
+	\def Z
+		\brief Macro que define la posicion de la bandera \a \b Z en el puntero \b dir_flags
+	\def C
+		\brief Macro que define la posicion de la bandera \a \b C en el puntero \b dir_flags
+	\def V
+		\brief Macro que define la posicion de la bandera \a \b V en el puntero \b dir_flags
+	\def SP
+		\brief Macro que define la posicion del registro \a \b SP en el puntero \b dir_reg
+	\def LR
+		\brief Macro que define la posicion del registro \a \b LR en el puntero \b dir_reg
+	\def PC
+		\brief Macro que define la posicion del registro \a \b PC en el puntero \b dir_reg
+*/
+
 #include "instrucciones.h"
 /* Macros para asignacion de las banderas */
 #define N 0
@@ -157,7 +174,7 @@ void NOP(uint32_t *dir_reg)	//No hace nada durante un ciclo de reloj
 
 void PUSH(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos )
 {  
-	 int i=0;  
+	int i=0;  
 	uint8_t address=0;
 	address=dir_reg[SP]-4*bitcount(R_activos); //address queda en la posiccion 38
 	for(i=0;R_activos[i]<=14;i++)
@@ -192,27 +209,25 @@ uint32_t bitcount(uint8_t *R)
 
 void POP(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos )
 {
-uint8_t address;
-int i;
-address=dir_reg[SP];
-for(i=0;R_activos[i]<=14;i++)
-{
-	if(R_activos[i]==1)
+	uint8_t address;
+	int i;
+	address=dir_reg[SP];
+	for(i=0;R_activos[i]<=14;i++)
 	{
-	  dir_reg[i]=SRAM[address+3];
-	   dir_reg[i]<<=8;
-	   dir_reg[i]=SRAM[address+2];
-	   dir_reg[i]<<=16;
-	   dir_reg[i]=SRAM[address+1];
-	   dir_reg[i]<<=24;
-	   dir_reg[i]=SRAM[address];
+		if(R_activos[i]==1)
+		{
+			dir_reg[i]=SRAM[address+3];
+			dir_reg[i]<<=8;
+			dir_reg[i]=SRAM[address+2];
+			dir_reg[i]<<=16;
+			dir_reg[i]=SRAM[address+1];
+			dir_reg[i]<<=24;
+			dir_reg[i]=SRAM[address];
+		}
 	}
-
-	  
+    if(R_activos[15]==1)
+	{
+		//loadwritePC(SRAM[address,4]);
+		dir_reg[SP]=dir_reg[SP]+4*bitcount(R_activos);
+	}
 }
-     if(R_activos[15]==1)
-	 {
-		 //loadwritePC(SRAM[address,4]);
-		 dir_reg[SP]=dir_reg[SP]+4*bitcount(R_activos);
-	 }
-	}	

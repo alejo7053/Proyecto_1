@@ -1,4 +1,5 @@
 #include "imprimir.h"
+
 void valor_registro( uint32_t  valores[])
 {
 	int i,j=0;	

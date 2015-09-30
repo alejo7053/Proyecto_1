@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <curses.h>
+
 /**
 *\brief     
   <b><center>valor_registro</center></b>  \n  

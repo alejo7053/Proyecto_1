@@ -1,11 +1,30 @@
-﻿#include <curses.h>
+﻿/**
+	\def N
+		\brief Macro que define la posicion de la bandera \a \b N en el registro\a \b APSR
+	\def Z
+		\brief Macro que define la posicion de la bandera \a \b Z en el registro\a \b APSR
+	\def C
+		\brief Macro que define la posicion de la bandera \a \b C en el registro \a \b APSR
+	\def V
+		\brief Macro que define la posicion de la bandera \a \b V en el registro \a \b APSR
+	\def SP
+		\brief Macro que define la posicion del registro \a \b SP en el arreglo \a \b R
+	\def LR
+		\brief Macro que define la posicion del registro \a \b LR en el arreglo \a \b R
+	\def PC
+		\brief Macro que define la posicion del registro \a \b PC en el arreglo \a \b R
+	\def TAM_SRAM
+		\brief Macro que define el tamaño del arreglo que emula la memoria \a \b SRAM
+*/
+
+#include <curses.h>
 #include "imprimir.h"
 #include "instrucciones.h"
 #include "instruc_desplazamiento.h"
 #include "salto.h"
 #include "decoder.h"
 #include <time.h>
-#define N 0
+#define N 0 
 #define Z 1
 #define C 2
 #define V 3

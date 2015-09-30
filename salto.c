@@ -1,3 +1,18 @@
+/**
+	\def N
+		\brief Macro que define la posicion de la bandera \a \b N en el puntero \b dir_flags
+	\def Z
+		\brief Macro que define la posicion de la bandera \a \b Z en el puntero \b dir_flags
+	\def C
+		\brief Macro que define la posicion de la bandera \a \b C en el puntero \b dir_flags
+	\def V
+		\brief Macro que define la posicion de la bandera \a \b V en el puntero \b dir_flags
+	\def LR
+		\brief Macro que define la posicion del registro \a \b LR en el puntero \b dir_reg
+	\def PC
+		\brief Macro que define la posicion del registro \a \b PC en el puntero \b dir_reg
+*/
+
 #include "salto.h"
 #define N 0
 #define Z 1

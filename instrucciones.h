@@ -194,30 +194,30 @@ uint32_t ORR(uint32_t Rn, uint32_t Rm, char *dir_flags);
 void NOP(uint32_t *dir_reg);
 
 /**
-*\brief
-	<center><b>PUSH</b></center> \n
-	<small>prototipo de la funcion PUSH que va a operar los registros guardando datos en memoria</small>
-		\param  SRAM <small>puntero que tiene la direccion de SRAM</small> \n
-		\param  dir_reg <small>puntero que tiene la direccion de los registros</small> \n
-		\param  R_activos <small>puntero que tiene la direccion de los registros activos</small> \n
+	\brief 
+	### Función PUSH #####
+	Guarda datos en la Pila
+	\param SRAM puntero a los registros de esta memoria
+	\param dir_reg puntero a los registro principales
+	\param R_activos puntero a los registros activos
 */
 void PUSH(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos );
 
 /**
 *\brief
-	<center><b>bitcount</b></center> \n
-	<small>prototipo de la funcion bitcount que va a operar los registros contando cuantos estan en 1</small>
-		\param  R <small>Registros que va a operar la funcion</small> \n
-		\return <small>retorna  el numero de registro activos</small>
+	<center><b>bitcount</b></center>
+	funcion bitcount que va a operar los registros contando cuantos estan en 1
+		\param  R registros que va a operar la funcion
+		\return retorna  el numero de registro activos
 */
 uint32_t bitcount(uint8_t *R);
 
 /**
 *\brief
-	<center><b>POP</b></center> \n
+	<center><b>POP</b></center>
 	<small>prototipo de la funcion POP que va a operar los registros contando cuantos estan en 1</small>
-		\param  SRAM <small>Registros de SRAM que va a operar la funcion</small> \n
-		\param  dir_reg <small>Puntero a registros</small> \n
-		\param  R_activos <small>puntero a registros activos</small> \n
+		\param  SRAM registros de SRAM que va a operar la funcion
+		\param  dir_reg puntero a registros
+		\param  R_activos puntero a registros activos
 */
 void POP(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos );
