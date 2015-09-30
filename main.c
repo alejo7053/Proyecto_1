@@ -16,8 +16,7 @@
 
 int main(void)
 {
-	uint8_t SRAM[TAM_SRAM];
-	int R_activos[16]={1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0};
+	uint8_t SRAM[TAM_SRAM], *dir_SRAM=SRAM;
 	uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
 	int i=0;
 	char APSR[4], *dir_flags=APSR, ch=0, ch2='a';//orden Banderas APSR: N,Z,C,V
@@ -27,7 +26,7 @@ int main(void)
 		if(i>=0&&i<4)
 			APSR[i]=0;
 	}
-	dir_reg[SP]=TAM_SRAM+1;
+	dir_reg[SP]=TAM_SRAM;
 	initscr();		/* Inicia modo curses */
 	curs_set(0);	/* Cursor Invisible */
 	raw();			/* Activa modo raw */
@@ -78,7 +77,7 @@ int main(void)
 					ACS_LLCORNER, ACS_LRCORNER);	//dibuja los bordes
 			
 			instruction = getInstruction(instructions[dir_reg[PC]]);	//Obtiene la instruccion de acuerdo al registro PC
-			decodeInstruction(instruction, dir_reg, dir_flags); 
+			decodeInstruction(instruction, dir_reg, dir_flags, dir_SRAM); 
 			
 			mvprintw(2,30,"EMULADOR CORTEX-M0");
 			attron(COLOR_PAIR(2));
@@ -95,6 +94,7 @@ int main(void)
 			refresh();
 			attroff(COLOR_PAIR(1));	/* DEshabilita los colores Pair 1 */
 		}
+
 		ch=getch();	//lee caracter del teclado
 		if(ch=='r'||ch=='R') //Presionando la tecla R reinicia la ejecucion del codigo
 		{

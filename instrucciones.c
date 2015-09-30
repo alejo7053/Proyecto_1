@@ -155,7 +155,7 @@ void NOP(uint32_t *dir_reg)	//No hace nada durante un ciclo de reloj
 
 //uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
 
-void PUSH(uint8_t *SRAM, uint32_t *dir_reg, int *R_activos )
+void PUSH(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos )
 {  
 	 int i=0;  
 	uint8_t address=0;
@@ -174,7 +174,7 @@ void PUSH(uint8_t *SRAM, uint32_t *dir_reg, int *R_activos )
 	dir_reg[SP]=dir_reg[SP]-4*bitcount(R_activos);  //
 }
 
-uint32_t bitcount(int *R)
+uint32_t bitcount(uint8_t *R)
 {
 	int activos=0,i=0;
 	for(i=0;i<=15;i++)
@@ -190,7 +190,7 @@ uint32_t bitcount(int *R)
 	return activos;
 }
 
-void POP(uint8_t *SRAM, uint32_t *dir_reg, int *R_activos )
+void POP(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos )
 {
 uint8_t address;
 int i;

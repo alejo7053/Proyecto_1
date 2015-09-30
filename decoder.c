@@ -1,8 +1,9 @@
 ﻿#include "decoder.h"
 #define PC 15
 
-void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_flags)
+void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_flags, uint8_t *SRAM)
 {
+	uint8_t *R_activos=instruction.registers_list;
 	/* Comparacion de mnemonic y Llamado de las funciones */
 	int op=3;
 	if( strcmp(instruction.mnemonic,"ADC") == 0 || strcmp(instruction.mnemonic,"ADCS") == 0){
@@ -250,7 +251,14 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 		op=1;
 		BAL(instruction.op1_value, dir_reg);
 	}
-	
+	if(strcmp(instruction.mnemonic,"PUSH")==0){
+		dir_reg[PC]++;
+		PUSH(SRAM, dir_reg,R_activos);
+	}
+	if(strcmp(instruction.mnemonic,"POP")==0){
+		dir_reg[PC]++;
+		POP(SRAM,dir_reg,R_activos);
+	}
 	switch(op) //Imprime las instrucciones de acuerdo a la cantidad de parametros 1, 2 o 3
 	{
 	case 1:
@@ -286,13 +294,18 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 
 instruction_t getInstruction(char* instStr)
 {
-	instruction_t instruction;
+	instruction_t instruction=
+	{
+		.registers_list = {0},
+		.op3_type  = 'N',
+		.op3_value = 0
+	};
 	char* split = (char*)malloc(strlen(instStr)+1);
 	int num=0;
 	
 	strcpy(split, instStr);
 	/* Obtiene el mnemonico de la instrucción */	
-	split = strtok(split, " ,");	
+	split = strtok(split, " ,");
 	strcpy(instruction.mnemonic, split);
 	
 	/* Separa los operandos */	
@@ -300,8 +313,23 @@ instruction_t getInstruction(char* instStr)
 	{
 		switch(num){
 			case 1:
-				instruction.op1_type  = split[0];
-				instruction.op1_value = (uint32_t)strtoll(split+1, NULL, 0);
+				if(split[0] == '{'){
+					instruction.op1_type  = split[0];
+					split++;
+					do{
+						if(split[0]=='L')
+							instruction.registers_list[14] = 1;
+						else if(split[0]=='P')
+							instruction.registers_list[15] = 1;
+						else
+							instruction.registers_list[(uint8_t)strtoll(split+1, NULL, 0)] = 1;
+							
+						split = strtok(NULL, ",");
+					}while(split != NULL);
+				}else{
+					instruction.op1_type  = split[0];
+					instruction.op1_value = (uint32_t)strtoll(split+1, NULL, 0);
+				}					
 				break;
 			
 			case 2:
@@ -314,16 +342,21 @@ instruction_t getInstruction(char* instStr)
 				instruction.op3_value = (uint32_t)strtoll(split+1, NULL, 0);			
 				break;
 		}
-		
-		split = strtok(NULL, " ,.");
-		num++;
+		if(split != NULL){
+			split = strtok(NULL, " ,.");
+			num++;
+		}	
 	}	
 	
-	if(num==3){
-		instruction.op3_type  = 'N';
-		instruction.op3_value = 0;					
+	if(instruction.op1_type == 'L'){
+		instruction.op1_value = 14;
+		instruction.op1_type = 'R';
 	}
 	
+	if(instruction.op1_type == '{'){
+		instruction.op1_type = 'P';
+	}
+
 	free(split);	
 	
 	return instruction;
