@@ -31,13 +31,14 @@
 #define LR 14
 #define PC 15
 #define SP 13
-#define TAM_SRAM 40
+#define TAM_SRAM 255
 
 int main(void)
 {
 	uint8_t SRAM[TAM_SRAM], *dir_SRAM=SRAM;
+	
 	uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
-	int i=0;
+	int i=0,t=0,l=0;
 	char APSR[4], *dir_flags=APSR, ch=0, ch2='a';//orden Banderas APSR: N,Z,C,V
 	for(i=0;i<16;i++) //inicializacion de registro y banderas en 0
 	{
@@ -45,6 +46,12 @@ int main(void)
 		if(i>=0&&i<4)
 			APSR[i]=0;
 	}
+	for(i=0;i<=TAM_SRAM;i++)
+	{
+		SRAM[i]=255;
+	}
+	SRAM[TAM_SRAM-129]=03; //borrar esto
+	SRAM[TAM_SRAM-156]=50; //borrar esto
 	dir_reg[SP]=TAM_SRAM;
 	initscr();		/* Inicia modo curses */
 	curs_set(0);	/* Cursor Invisible */
@@ -77,6 +84,7 @@ int main(void)
 	//ciclo para leer e imprimir las instrucciones, termina al presionar la tecla Q
 	while(ch!='q'&&ch!='Q'){
 		
+				
 		if(ch=='a'||ch=='A'){	//Presiona tecla A y se inicia el modo automatico
 			timeout(500);
 			ch2='a';
@@ -87,14 +95,16 @@ int main(void)
 			ch2='p';
 		}
 		
-		if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'){	//Solo se ejecuta con las teclas indicadas
+		if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'||ch=='M'||ch=='m'){	//Solo se ejecuta con las teclas indicadas
 			erase();
 			
 			border( ACS_VLINE, ACS_VLINE, 
 					ACS_HLINE, ACS_HLINE, 
 					ACS_ULCORNER, ACS_URCORNER,
 					ACS_LLCORNER, ACS_LRCORNER);	//dibuja los bordes
-			
+					
+					
+		if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'){
 			instruction = getInstruction(instructions[dir_reg[PC]]);	//Obtiene la instruccion de acuerdo al registro PC
 			decodeInstruction(instruction, dir_reg, dir_flags, dir_SRAM); 
 			
@@ -109,12 +119,52 @@ int main(void)
 			mvprintw(10,50,"C: %d",APSR[C]);
 			mvprintw(11,50,"V: %d",APSR[V]);
 			attroff(COLOR_PAIR(3));
-			mvprintw(23,7,"P: Paso a Paso\tA: Automatico\tQ: Salir\tR: Reiniciar");
+			mvprintw(23,3,"P: Paso a Paso   A: Automatico   Q: Salir   R: Reiniciar  M: Memoria");
 			refresh();
 			attroff(COLOR_PAIR(1));	/* DEshabilita los colores Pair 1 */
 		}
+		if(ch=='m'||ch=='M'){
+				t= 0;
+		}
+			while((ch=='m'||ch=='M')&&(t==0)){
+				erase();
+				attron(COLOR_PAIR(1));
+				mvprintw(1,2,"EMULADOR CORTEX-M0");
+				mvprintw(23,3,"P: Paso a Paso   A: Automatico   Q: Salir   R: Reiniciar  M: Memoria");
+				attroff(COLOR_PAIR(1));
+				attron(COLOR_PAIR(3));
+				mvprintw(1,22,"SRAM");
+				attroff(COLOR_PAIR(3));
+				int j=4;
+				uint8_t aux=TAM_SRAM;
 
-		ch=getch();	//lee caracter del teclado
+				for(i=aux;i>191;i=i-4){
+					attron(COLOR_PAIR(2));
+					mvprintw(j,3,"%X",i);
+					mvprintw(j,23,"%X",i-64);
+					mvprintw(j,43,"%X",i-128);
+					mvprintw(j,63,"%.2X",i-192);
+					attroff(COLOR_PAIR(2));
+					attron(COLOR_PAIR(3));
+					mvprintw(j,7,"%.2X %.2X %.2X %.2X",SRAM[i],SRAM[i-1],SRAM[i-2],SRAM[i-3]);
+					mvprintw(j,27,"%.2X %.2X %.2X %.2X",SRAM[i-128],SRAM[(i-128)-1],SRAM[(i-128)-2],SRAM[(i-128)-3]);
+					mvprintw(j,47,"%.2X %.2X %.2X %.2X",SRAM[i-128],SRAM[(i-128)-1],SRAM[(i-128)-2],SRAM[(i-128)-3]);
+					mvprintw(j,67,"%.2X %.2X %.2X %.2X",SRAM[i-192],SRAM[(i-192)-1],SRAM[(i-192)-2],SRAM[(i-192)-3]);
+					attroff(COLOR_PAIR(3));
+					j++;
+				}
+				while(ch=='m'){
+				ch=getch();
+				if(ch=='m'||ch=='M'){
+				l++;
+				t= l % 2;
+				erase();
+				}}
+		}}
+		ch=getch();
+
+
+		//ch=getch();	//lee caracter del teclado
 		if(ch=='r'||ch=='R') //Presionando la tecla R reinicia la ejecucion del codigo
 		{
 			for(i=0;i<16;i++)
@@ -123,7 +173,14 @@ int main(void)
 				if(i>=0&&i<4)
 					APSR[i]=0;
 			}
+			for(i=0;i<=TAM_SRAM;i++)
+		{
+				SRAM[i]=255;
 		}
+		}
+		//l++;
+		//t=l % 2;
+
 	}
 	
 

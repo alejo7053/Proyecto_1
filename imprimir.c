@@ -12,7 +12,7 @@ void valor_registro( uint32_t  valores[])
 			j++;
 		}
 	}
-	mvprintw(7+j,20,"SP:  %.10x",valores[i]);
+	mvprintw(7+j,20,"SP:  %.10X",valores[i]);
 	mvprintw(8+j,20,"LR:  %.10u",valores[i+1]*2);
 	mvprintw(9+j,20,"PC:  %.10u",valores[i+2]*2); //Se impremen en pantalla LR y PC
 }
