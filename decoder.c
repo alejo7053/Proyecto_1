@@ -6,11 +6,11 @@
 #include "decoder.h"
 #define PC 15
 
-void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_flags, uint8_t *SRAM)
+void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_flags, uint8_t *SRAM, int *op)
 {
 	uint8_t *R_activos=instruction.registers_list;
 	/* Comparacion de mnemonic y Llamado de las funciones */
-	int op=3;
+	*op=3;
 	if( strcmp(instruction.mnemonic,"ADC") == 0 || strcmp(instruction.mnemonic,"ADCS") == 0){
 		dir_reg[PC]++;
 		if(instruction.op3_type=='#')
@@ -54,13 +54,13 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	if( strcmp(instruction.mnemonic,"CMN" ) == 0 || strcmp(instruction.mnemonic,"CMNS") == 0){
 		dir_reg[PC]++;
 		CMN(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value],dir_flags);
-		op=2;
+		*op=2;
 	}
 	
 	if( strcmp(instruction.mnemonic,"CMP") == 0 || strcmp(instruction.mnemonic,"CMPS") == 0){
 		dir_reg[PC]++;
 		CMP(dir_reg[instruction.op1_value],dir_reg[instruction.op2_value],dir_flags);
-		op=2;
+		*op=2;
 	}
 	
 	if( strcmp(instruction.mnemonic,"EOR") == 0 || strcmp(instruction.mnemonic,"EORS") == 0){
@@ -93,7 +93,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 			dir_reg[instruction.op1_value]=MOV(instruction.op2_value,dir_flags);
 		else
 			dir_reg[instruction.op1_value]=MOV(dir_reg[instruction.op2_value],dir_flags);
-		op=2;
+		*op=2;
 	}
 	
 	if( strcmp(instruction.mnemonic,"MUL") == 0 || strcmp(instruction.mnemonic,"MULS") == 0){
@@ -164,96 +164,96 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	
 	if( strcmp(instruction.mnemonic,"NOP") == 0 ){
 		NOP(dir_reg);
-		op=5;
+		*op=5;
 	}
 	
 	if( strcmp(instruction.mnemonic,"B") == 0 ){
-		op=1;
+		*op=1;
 		B(instruction.op1_value, dir_reg);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BL") == 0 ){
-		op=1;
+		*op=1;
 		BL(instruction.op1_value, dir_reg);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BX") == 0 ){
-		op=4;
+		*op=4;
 		BX(dir_reg);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BEQ") == 0 ){
-		op=1;
+		*op=1;
 		BEQ(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BNE") == 0 ){
-		op=1;
+		*op=1;
 		BNE(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BCS") == 0 ){
-		op=1;
+		*op=1;
 		BCS(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BCC") == 0 ){
-		op=1;
+		*op=1;
 		BCC(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BMI") == 0 ){
-		op=1;
+		*op=1;
 		BMI(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BPL") == 0 ){
-		op=1;
+		*op=1;
 		BPL(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BVS") == 0 ){
-		op=1;
+		*op=1;
 		BVS(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BVC") == 0 ){
-		op=1;
+		*op=1;
 		BVC(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BHI") == 0 ){
-		op=1;
+		*op=1;
 		BHI(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BLS") == 0 ){
-		op=1;
+		*op=1;
 		BLS(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BGE") == 0 ){
-		op=1;
+		*op=1;
 		BGE(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BLT") == 0 ){
-		op=1;
+		*op=1;
 		BLT(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BGT") == 0 ){
-		op=1;
+		*op=1;
 		BGT(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BLE") == 0 ){
-		op=1;
+		*op=1;
 		BLE(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BAL") == 0 ){
-		op=1;
+		*op=1;
 		BAL(instruction.op1_value, dir_reg);
 	}
 	if(strcmp(instruction.mnemonic,"PUSH")==0){
@@ -264,7 +264,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 		dir_reg[PC]++;
 		POP(SRAM,dir_reg,R_activos);
 	}
-	switch(op) //Imprime las instrucciones de acuerdo a la cantidad de parametros 1, 2 o 3
+	switch(*op) //Imprime las instrucciones de acuerdo a la cantidad de parametros 1, 2 o 3
 	{
 	case 1:
 		if(instruction.op1_type=='#')
