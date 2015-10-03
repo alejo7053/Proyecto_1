@@ -221,3 +221,13 @@ uint32_t bitcount(uint8_t *R);
 		\param  R_activos puntero a registros activos
 */
 void POP(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos );
+
+/**
+	\brief 
+	Extrae 4 bloques de SRAM
+	\param Rn direccion de memoria
+	\param Rm numero o direccion de memoria
+	\param SRAM puntero a la memoria SRAM
+	\return Rt registro donde guarda los datos extraidos
+*/
+uint32_t LDR(uint32_t Rn, uint32_t Rm, uint8_t *SRAM);

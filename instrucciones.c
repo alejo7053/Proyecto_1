@@ -231,3 +231,20 @@ void POP(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos )
 		dir_reg[SP]=dir_reg[SP]+4*bitcount(R_activos);
 	}
 }
+
+uint32_t LDR(uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
+{
+	//Solo para Rm=imm5
+	uint32_t Rt;
+	Rm<<=2;
+	uint32_t address;
+	address = Rn+Rm;
+	Rt=SRAM[address+3];
+	Rt<<=8;
+	Rt=SRAM[address+2];
+	Rt<<=16;
+	Rt=SRAM[address+1];
+	Rt<<=24;
+	Rt=SRAM[address];
+	return Rt;
+}
