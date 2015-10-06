@@ -224,10 +224,80 @@ void POP(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos );
 
 /**
 	\brief 
-	Extrae 4 bloques de SRAM
+	Extrae 32bits de SRAM, los guarda en un registro de 32 bits haciendo extension de cero
 	\param Rn direccion de memoria
 	\param Rm numero o direccion de memoria
 	\param SRAM puntero a la memoria SRAM
 	\return Rt registro donde guarda los datos extraidos
 */
 uint32_t LDR(uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
+
+/**
+	\brief 
+	Extrae 8 bits de SRAM, los guarda en un registro de 32 bits haciendo extension de cero
+	\param Rn direccion de memoria
+	\param Rm numero o direccion de memoria
+	\param SRAM puntero a la memoria SRAM
+	\return Rt registro donde guarda los datos extraidos
+*/
+uint32_t LDRB(uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
+
+/**
+	\brief 
+	Extrae 16 bits de SRAM,los guarda en un registro de 32 bits haciendo extension de cero
+	\param Rn direccion de memoria
+	\param Rm numero o direccion de memoria
+	\param SRAM puntero a la memoria SRAM
+	\return Rt registro donde guarda los datos extraidos
+*/
+uint32_t LDRH(uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
+
+/**
+	\brief 
+	Extrae 8 bits de SRAM, los guarda en un registro de 32 bits haciendo extension de signo
+	\param Rn direccion de memoria
+	\param Rm numero o direccion de memoria
+	\param SRAM puntero a la memoria SRAM
+	\return Rt registro donde guarda los datos extraidos
+*/
+uint32_t LDRSB(uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
+
+/**
+	\brief 
+	Extrae 16 bits de SRAM, los guarda en un registro de 32 bits haciendo extension de signo
+	\param Rn direccion de memoria
+	\param Rm numero o direccion de memoria
+	\param SRAM puntero a la memoria SRAM
+	\return Rt registro donde guarda los datos extraidos
+*/
+uint32_t LDRSH(uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
+
+/**
+	\brief 
+	Guarda 32 bits de un registro en SRAM
+	\param Rt registro a guardar en SRAM
+	\param Rn direccion de memoria
+	\param Rm numero o direccion de memoria
+	\param SRAM puntero a la memoria SRAM
+*/
+void STR(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
+
+/**
+	\brief 
+	Guarda los primeros 8 bits de un registro en SRAM
+	\param Rt registro a guardar en SRAM
+	\param Rn direccion de memoria
+	\param Rm numero o direccion de memoria
+	\param SRAM puntero a la memoria SRAM
+*/
+void STRB(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
+
+/**
+	\brief 
+	Guarda los primeros 16 bits de un registro en SRAM
+	\param Rt registro a guardar en SRAM
+	\param Rn direccion de memoria
+	\param Rm numero o direccion de memoria
+	\param SRAM puntero a la memoria SRAM
+*/
+void STRH(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
