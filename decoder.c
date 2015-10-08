@@ -256,13 +256,73 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 		*op=1;
 		BAL(instruction.op1_value, dir_reg);
 	}
+	
 	if(strcmp(instruction.mnemonic,"PUSH")==0){
 		dir_reg[PC]++;
 		PUSH(SRAM, dir_reg,R_activos);
 	}
+	
 	if(strcmp(instruction.mnemonic,"POP")==0){
 		dir_reg[PC]++;
 		POP(SRAM,dir_reg,R_activos);
+	}
+	
+	if(strcmp(instruction.mnemonic,"LDR")==0){
+		dir_reg[PC]++;
+		if(instruction.op3_type=='#' || instruction.op3_type=='N')
+			dir_reg[instruction.op1_value]=LDR(dir_reg[instruction.op2_value], instruction.op3_value<<2, SRAM);
+		else
+			dir_reg[instruction.op1_value]=LDR(dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);
+	}
+	
+	if(strcmp(instruction.mnemonic,"LDRB")==0){
+		dir_reg[PC]++;
+		if(instruction.op3_type=='#' || instruction.op3_type=='N')
+			dir_reg[instruction.op1_value]=LDRB(dir_reg[instruction.op2_value], instruction.op3_value, SRAM);
+		else
+			dir_reg[instruction.op1_value]=LDRB(dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);
+	}
+	
+	if(strcmp(instruction.mnemonic,"LDRH")==0){
+		dir_reg[PC]++;
+		if(instruction.op3_type=='#' || instruction.op3_type=='N')
+			dir_reg[instruction.op1_value]=LDRH(dir_reg[instruction.op2_value], instruction.op3_value<<1, SRAM);
+		else
+			dir_reg[instruction.op1_value]=LDRH(dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);
+	}
+	
+	if(strcmp(instruction.mnemonic,"LDRSB")==0){
+		dir_reg[PC]++;
+		dir_reg[instruction.op1_value]=LDRSB(dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);
+	}
+	
+	if(strcmp(instruction.mnemonic,"LDRSH")==0){
+		dir_reg[PC]++;
+		dir_reg[instruction.op1_value]=LDRSH(dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);
+	}
+	
+	if(strcmp(instruction.mnemonic,"STR")==0){
+		dir_reg[PC]++;
+		if(instruction.op3_type=='#' || instruction.op3_type=='N')
+			STR(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], instruction.op3_value<<2, SRAM);
+		else
+			STR(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);
+	}
+	
+	if(strcmp(instruction.mnemonic,"STRB")==0){
+		dir_reg[PC]++;
+		if(instruction.op3_type=='#' || instruction.op3_type=='N')
+			STRB(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], instruction.op3_value, SRAM);
+		else
+			STRB(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);
+	}
+	
+	if(strcmp(instruction.mnemonic,"STRH")==0){
+		dir_reg[PC]++;
+		if(instruction.op3_type=='#' || instruction.op3_type=='N')
+			STRH(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], instruction.op3_value<<1, SRAM);
+		else
+			STRH(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);
 	}
 	switch(*op) //Imprime las instrucciones de acuerdo a la cantidad de parametros 1, 2 o 3
 	{

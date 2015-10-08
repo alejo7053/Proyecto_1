@@ -234,17 +234,14 @@ void POP(uint8_t *SRAM, uint32_t *dir_reg, uint8_t *R_activos )
 
 uint32_t LDR(uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 {
-	//Solo para Rm=imm5
 	uint32_t Rt, address;
-	Rm<<=2;
 	address = Rn+Rm;
-	Rt=SRAM[address+3] | SRAM[address+2] | SRAM[address+1] | SRAM[address];
+	Rt=SRAM[address+3]<<24 | SRAM[address+2]<<16 | SRAM[address+1]<<8 | SRAM[address];
 	return Rt;
 }
 
 uint32_t LDRB(uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 {
-	//solo para Rm=imm5
 	uint32_t Rt, address;
 	address=Rn+Rm;
 	Rt=SRAM[address];
@@ -253,9 +250,7 @@ uint32_t LDRB(uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 
 uint32_t LDRH(uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 {
-	//Solo para  Rm=imm5
 	uint32_t Rt, address;
-	Rm<<=1;
 	address=Rn+Rm;
 	Rt=SRAM[address] | SRAM[address+1];
 	return Rt;
@@ -264,26 +259,26 @@ uint32_t LDRH(uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 uint32_t LDRSB(uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 {
 	uint32_t Rt, address;
+	int32_t data;
 	address=Rn+Rm;
-	//Hacer extension de signos
-	Rt=SRAM[address];
+	data=(int32_t)(SRAM[address]);
+	Rt=data;
 	return Rt;
 }
 
 uint32_t LDRSH(uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 {
 	uint32_t Rt, address;
+	int32_t data;
 	address=Rn+Rm;
-	//Hacer extension de signos
-	Rt=SRAM[address] | SRAM[address+1];
+	data=(int32_t)(SRAM[address+1]<<8 | SRAM[address]);
+	Rt=data;
 	return Rt;
 }
 
 void STR(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 {
-	//Solo para Rm=imm5
 	uint32_t address;
-	Rm<<=2;
 	address=Rn+Rm;
 	SRAM[address]=(uint8_t)Rt; 
 	SRAM[address+1]=((uint8_t)Rt>>8);
@@ -301,7 +296,6 @@ void STRB(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 void STRH(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 {
 	uint32_t address;
-	Rm<<=1;
 	address=Rn+Rm;
 	SRAM[address]=(uint8_t)Rt; 
 	SRAM[address+1]=((uint8_t)Rt>>8);
