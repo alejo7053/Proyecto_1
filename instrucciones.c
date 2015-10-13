@@ -300,3 +300,87 @@ void STRH(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 	SRAM[address]=(uint8_t)Rt; 
 	SRAM[address+1]=((uint8_t)Rt>>8);
 }
+
+void PUSHI(uint8_t *SRAM, uint32_t *dir_reg,char *dir_flags)
+{
+	uint8_t address=0;
+    int i;	
+	address=dir_reg[SP]-4*16;
+	//address=dir_reg[SP]-4*bitcount(R_activos); //address queda en la posiccion 38
+	for(i=0;i<=15;i++)
+	{
+		if(i!=SP)
+		{
+			SRAM[address]=(uint8_t)dir_reg[i]; 
+			SRAM[address+1]=((uint8_t)dir_reg[i]>>8);
+			SRAM[address+2]=((uint8_t)dir_reg[i]>>16);
+			SRAM[address+3]=((uint8_t)dir_reg[i]>>24);
+			address+=4;         
+		}
+	}
+	SRAM[address]=(uint8_t)dir_flags[N];
+	SRAM[address+1]=(uint8_t)dir_flags[Z];
+	SRAM[address+2]=(uint8_t)dir_flags[C];
+	SRAM[address+3]=(uint8_t)dir_flags[V];
+	
+	dir_reg[SP]=dir_reg[SP]-4*16;
+	
+}
+void POPI(uint8_t *SRAM, uint32_t *dir_reg,char *dir_flags)
+{
+	uint8_t address=0;
+    int i;	
+	address=dir_reg[SP];
+	for(i=0;i<=15;i++)
+	{
+		if(i!=SP)
+		{
+			dir_reg[i]=SRAM[address+3];
+			dir_reg[i]<<=8;
+			dir_reg[i]=SRAM[address+2];
+			dir_reg[i]<<=16;
+			dir_reg[i]=SRAM[address+1];
+			dir_reg[i]<<=24;
+			dir_reg[i]=SRAM[address];
+		address+=4;
+		}
+	}
+
+	dir_flags[N]=(char)SRAM[address];
+	dir_flags[Z]=(char)SRAM[address+1];
+	dir_flags[C]=(char)SRAM[address+2];
+	dir_flags[V]=(char)SRAM[address+3];
+
+	dir_reg[SP]=dir_reg[SP]+4*16;
+	}
+
+
+void fu(int *IRQ,uint8_t *SRAM, uint32_t *dir_reg,char *dir_flags)
+{
+	int i;
+	PUSHI(SRAM,dir_reg,dir_flags);
+	for(i=0;i<=4;i++)
+	{
+		if((IRQ[i]=1)&&(i==0))
+		{
+			// INSTRUCCION DE LA INTERRUPCION
+		}
+		if((IRQ[i]=1)&&(i==1))
+		{
+			// INSTRUCCION DE LA INTERRUPCION
+		}
+		if((IRQ[i]=1)&&(i==2))
+		{
+			// INSTRUCCION DE LA INTERRUPCION
+		}
+		if((IRQ[i]=1)&&(i==3))
+		{
+			// INSTRUCCION DE LA INTERRUPCION
+		}
+		if((IRQ[i]=1)&&(i==4))
+		{
+			// INSTRUCCION DE LA INTERRUPCION
+		}
+	}
+	POPI(SRAM,dir_reg,dir_flags);
+}

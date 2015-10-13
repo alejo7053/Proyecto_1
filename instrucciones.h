@@ -301,3 +301,7 @@ void STRB(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
 	\param SRAM puntero a la memoria SRAM
 */
 void STRH(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
+
+void fu(int *IRQ, uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);
+void PUSHI(uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);
+void POPI(uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);

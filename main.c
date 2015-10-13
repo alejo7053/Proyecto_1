@@ -36,10 +36,27 @@
 int main(void)
 {
 	uint8_t SRAM[TAM_SRAM], *dir_SRAM=SRAM;
-	
 	uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
 	int i=0,t=0,l=0, op=3;
 	char APSR[4], *dir_flags=APSR, ch=0, ch2='a';//orden Banderas APSR: N,Z,C,V
+	int IRQ[5]={0,0,0,0,0}; // se declara con 1 cuando hay una interrupcion
+	int interrupcion=0; // contador de interrupciones
+
+for(i=0;i<=4;i++)
+{
+	if(IRQ[i]==1)
+	{
+		interrupcion++;
+	}
+}
+if(interrupcion==1)
+{
+			fu(IRQ, SRAM, dir_reg, dir_flags);
+}
+else
+{
+// codigo principal	
+}	
 	for(i=0;i<16;i++) //inicializacion de registro y banderas en 0
 	{
 		R[i]=0;
