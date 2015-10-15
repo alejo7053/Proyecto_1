@@ -302,6 +302,6 @@ void STRB(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
 */
 void STRH(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
 
-void NVIC(int dir_IRQ, uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);
+void NVIC(uint8_t *IRQ, uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);
 void PUSHI(uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);
 void POPI(uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);

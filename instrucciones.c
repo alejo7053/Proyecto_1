@@ -363,21 +363,28 @@ void POPI(uint8_t *SRAM, uint32_t *dir_reg,char *dir_flags)
 	}
 
 
-void NVIC(int *dir_IRQ,uint8_t *SRAM, uint32_t *dir_reg,char *dir_flags)
+void NVIC(uint8_t *IRQ,uint8_t *SRAM, uint32_t *dir_reg,char *dir_flags)
 {
-	int i;
-	for(i=0;i<=15;i++)
-	{
-		if(IRQ[i]==1)
-		{
-			PUSHI(SRAM,dir_reg,dir_flags);
-			PC = i+1;
-			LR = 0xFFFFFFFF;
-			break;
-		}
-		
-	}
+	static flag=0;
 	
-	PC==0xFFFFFFFF ?
-		POPI(SRAM,dir_reg,dir_flags);
+	int i;
+	
+	if(flag==0){
+		for(i=0;i<=15;i++)
+		{
+			if(IRQ[i]==1)
+			{
+				PUSHI(SRAM,dir_reg,dir_flags);
+				dir_reg[PC] = i+1;
+				IRQ[i]=0;
+				flag = 1;
+				break;
+			}
+		}
+	}else{	
+		if(dir_reg[PC]==0xFFFFFFFF){
+			POPI(SRAM,dir_reg,dir_flags);
+			flag=0;
+		}	
+	}	
 }
