@@ -215,7 +215,7 @@ uint32_t bitcount(uint8_t *R);
 /**
 *\brief
 	<center><b>POP</b></center>
-	<small>prototipo de la funcion POP que va a operar los registros contando cuantos estan en 1</small>
+	Extrae los registros de la pila
 		\param  SRAM registros de SRAM que va a operar la funcion
 		\param  dir_reg puntero a registros
 		\param  R_activos puntero a registros activos
@@ -302,6 +302,30 @@ void STRB(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
 */
 void STRH(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM);
 
+/**
+	\brief 
+	Interrupciones
+	\param IRQ puntero al arreglo de interrupciones
+	\param SRAM puntero a la memoria SRAM
+	\param dir_reg puntero a los registro principales
+	\param dir_flags puntero a las banderas
+*/
 void NVIC(uint8_t *IRQ, uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);
+
+/**
+	\brief 
+	Guarda datos especificos en la pila que son dados por las interrupciones
+	\param SRAM puntero a la memoria SRAM
+	\param dir_reg puntero a los registro principales
+	\param dir_flags puntero a las banderas
+*/
 void PUSHI(uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);
+
+/**
+	\brief 
+	Extrae datos especificos despues de la interrupcion
+	\param SRAM puntero a la memoria SRAM
+	\param dir_reg puntero a los registro principales
+	\param dir_flags puntero a las banderas
+*/
 void POPI(uint8_t *SRAM, uint32_t *dir_reg, char *dir_flags);
