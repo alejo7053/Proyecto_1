@@ -37,8 +37,9 @@
 int main(void)
 {
 	uint8_t SRAM[TAM_SRAM], *dir_SRAM=SRAM;
+	uint16_t cod;
 	uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
-	int i=0,t=0, op=3;
+	int i=0,t=0;
 	char APSR[4], *dir_flags=APSR, ch=0, ch2='a';//orden Banderas APSR: N,Z,C,V
 	uint8_t IRQ[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; // se declara con 1 cuando hay una interrupcion
 	
@@ -111,13 +112,17 @@ for(i=0;i<=4;i++)
 		
 			if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'||ch=='A'){
 				erase();
+				
+				mvprintw(4,1,"%s",instructions[dir_reg[PC]]);
+				
 				border( ACS_VLINE, ACS_VLINE, 
 					ACS_HLINE, ACS_HLINE, 
 					ACS_ULCORNER, ACS_URCORNER,
 					ACS_LLCORNER, ACS_LRCORNER);	//dibuja los bordes
-					
+				
 				instruction = getInstruction(instructions[dir_reg[PC]]);	//Obtiene la instruccion de acuerdo al registro PC
-				decodeInstruction(instruction, dir_reg, dir_flags, dir_SRAM, &op); 
+				decodeInstruction(instruction, dir_reg, dir_flags, dir_SRAM, &cod); 
+				mvprintw(4,20,"%.4X",cod);
 				
 				mvprintw(2,30,"EMULADOR CORTEX-M0");
 				attron(COLOR_PAIR(2));
@@ -147,7 +152,7 @@ for(i=0;i<=4;i++)
 					ACS_LLCORNER, ACS_LRCORNER);	//dibuja los bordes
 					
 				mvprintw(1,2,"EMULADOR CORTEX-M0");
-				mvprintw(23,3,"M: Registros  I: Puertos");
+				mvprintw(23,3,"M: Registros  I: Puertos  Q: Salir");
 				attroff(COLOR_PAIR(1));
 				attron(COLOR_PAIR(3));
 				mvprintw(1,22,"SRAM");
@@ -171,9 +176,12 @@ for(i=0;i<=4;i++)
 					j++;
 				}
 				ch=getch();
-				if(ch=='m'||ch=='M'||ch=='I'||ch=='i'){
+				if(ch=='m'||ch=='M'||ch=='I'||ch=='i'||ch=='q'||ch=='Q'){
 					t= 1;
 					ch2='o';
+					if(ch=='q'||ch=='Q'){
+						ch2='q';
+					}
 					erase();
 					break;
 				}
@@ -194,14 +202,17 @@ for(i=0;i<=4;i++)
 				
 				mvprintw(1,2,"EMULADOR CORTEX-M0");				
 				showPorts();
-				mvprintw(23,3,"I: Registros  M: Memoria");
+				mvprintw(23,3,"I: Registros  M: Memoria  Q: Salir");
 				ch=getch();
-				if(ch=='i'||ch=='I'||ch=='m'||ch=='M'){
+				if(ch=='i'||ch=='I'||ch=='m'||ch=='M'||ch=='q'||ch=='Q'){
 					t= 1;
 					if(ch=='i'||ch=='I'){
 						ch2='o';}
 					if(ch=='M'||ch=='m'){
 						ch2='n';
+					}
+					if(ch=='q'||ch=='Q'){
+						ch2='q';
 					}
 					erase();
 					break;
@@ -213,45 +224,17 @@ for(i=0;i<=4;i++)
 			}
 			if(ch2=='o') //Regresar a la pantalla anterior luego de mostrar la memoria SRAM
 			{
+				erase();
+				
+				attron(COLOR_PAIR(1)); 
+				mvprintw(2,30,"EMULADOR CORTEX-M0");
+				mvprintw(4,1,"%s",instructions[dir_reg[PC]]);
+				
 				border( ACS_VLINE, ACS_VLINE, 
 					ACS_HLINE, ACS_HLINE, 
 					ACS_ULCORNER, ACS_URCORNER,
 					ACS_LLCORNER, ACS_LRCORNER);
 				
-				switch(op) //Imprime las instrucciones de acuerdo a la cantidad de parametros 1, 2 o 3
-				{
-					case 1:
-						if(instruction.op1_type=='#')
-							mvprintw(4,1,"%s %c%d", instruction.mnemonic, instruction.op1_type, instruction.op1_value);
-						else
-							mvprintw(4,1,"%s %c%d", instruction.mnemonic, instruction.op1_type, instruction.op1_value);
-						break;	
-					
-					case 2:
-					if(instruction.op2_type=='#')
-						mvprintw(4,1,"%s %c%d,%c%d", instruction.mnemonic, instruction.op1_type, instruction.op1_value, instruction.op2_type, instruction.op2_value);
-					else
-						mvprintw(4,1,"%s %c%d,%c%d", instruction.mnemonic, instruction.op1_type, instruction.op1_value, instruction.op2_type, instruction.op2_value);
-					break;
-					
-					case 3:		
-						if( instruction.op3_type=='#' || instruction.op2_type=='#')
-							mvprintw(4,1,"%s %c%d,%c%d,%c%d", instruction.mnemonic, instruction.op1_type, instruction.op1_value, instruction.op2_type, instruction.op2_value, instruction.op3_type, instruction.op3_value);
-						else
-							mvprintw(4,1,"%s %c%d,%c%d,%c%d", instruction.mnemonic, instruction.op1_type, instruction.op1_value, instruction.op2_type, instruction.op2_value, instruction.op3_type, instruction.op3_value);
-						break;
-						
-					case 4:
-						mvprintw(4,1,"BX LR");
-						break;
-						
-					case 5:
-						mvprintw(4,1,"NOP");
-						break;
-				}
-				
-				attron(COLOR_PAIR(1)); 
-				mvprintw(2,30,"EMULADOR CORTEX-M0");
 				attron(COLOR_PAIR(2));
 				valor_registro(R);
 				attroff(COLOR_PAIR(2));
@@ -263,12 +246,13 @@ for(i=0;i<=4;i++)
 				mvprintw(11,50,"V: %d",APSR[V]);
 				attroff(COLOR_PAIR(3));
 				mvprintw(23,1,"P: Paso a Paso  A: Automatico  Q: Salir  R: Reiniciar  M: Memoria  I: Puertos");
+				mvprintw(4,20,"%.4X",cod);
 				refresh();
 				attroff(COLOR_PAIR(1));	/* DEshabilita los colores Pair 1 */
 			}
 		}
 		
-		if(ch2!='n'){
+		if(ch2!='n'&&ch2!='q'){
 			ch=getch();}	//lee caracter del teclado
 			
 		if(ch=='r'||ch=='R') //Presionando la tecla R reinicia la ejecucion del codigo
