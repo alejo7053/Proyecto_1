@@ -23,6 +23,7 @@
 #include "instruc_desplazamiento.h"
 #include "salto.h"
 #include "decoder.h"
+#include "io.h"
 #include <time.h>
 #define N 0 
 #define Z 1
@@ -37,10 +38,10 @@ int main(void)
 {
 	uint8_t SRAM[TAM_SRAM], *dir_SRAM=SRAM;
 	uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
-	int i=0,t=0,l=0, op=3;
+	int i=0,t=0, op=3;
 	char APSR[4], *dir_flags=APSR, ch=0, ch2='a';//orden Banderas APSR: N,Z,C,V
-	int IRQ[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},*dir_IRQ=IRQ; // se declara con 1 cuando hay una interrupcion
-	int interrupcion=0; // contador de interrupciones
+	uint8_t IRQ[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; // se declara con 1 cuando hay una interrupcion
+	
 
 for(i=0;i<=4;i++)
 {
@@ -106,9 +107,9 @@ for(i=0;i<=4;i++)
 			timeout(-1);
 			ch2='p';
 		}
-		if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'||ch=='M'||ch=='m'){	//Solo se ejecuta con las teclas indicadas
+		if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'||ch=='A'||ch=='M'||ch=='m'||ch=='i'||ch=='I'){	//Solo se ejecuta con las teclas indicadas
 		
-			if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'){
+			if(ch2=='a'||ch=='p'||ch=='r'||ch=='P'||ch=='R'||ch=='A'){
 				erase();
 				border( ACS_VLINE, ACS_VLINE, 
 					ACS_HLINE, ACS_HLINE, 
@@ -129,12 +130,12 @@ for(i=0;i<=4;i++)
 				mvprintw(10,50,"C: %d",APSR[C]);
 				mvprintw(11,50,"V: %d",APSR[V]);
 				attroff(COLOR_PAIR(3));
-				mvprintw(23,3,"P: Paso a Paso   A: Automatico   Q: Salir   R: Reiniciar  M: Memoria");
+				mvprintw(23,1,"P: Paso a Paso  A: Automatico  Q: Salir  R: Reiniciar  M: Memoria  I: Puertos");
 				refresh();
 				attroff(COLOR_PAIR(1));	/* DEshabilita los colores Pair 1 */
 			}
 			
-			if(ch=='m'||ch=='M'){
+			if(ch=='m'||ch=='M'||ch=='i'||ch=='I'){
 					t= 0;
 			}
 			while((ch=='m'||ch=='M')&&(t==0)){
@@ -146,7 +147,7 @@ for(i=0;i<=4;i++)
 					ACS_LLCORNER, ACS_LRCORNER);	//dibuja los bordes
 					
 				mvprintw(1,2,"EMULADOR CORTEX-M0");
-				mvprintw(23,3,"M: Registros");
+				mvprintw(23,3,"M: Registros  I: Puertos");
 				attroff(COLOR_PAIR(1));
 				attron(COLOR_PAIR(3));
 				mvprintw(1,22,"SRAM");
@@ -170,9 +171,8 @@ for(i=0;i<=4;i++)
 					j++;
 				}
 				ch=getch();
-				if(ch=='m'||ch=='M'){
-					l++;
-					t= l % 2;
+				if(ch=='m'||ch=='M'||ch=='I'||ch=='i'){
+					t= 1;
 					ch2='o';
 					erase();
 					break;
@@ -180,6 +180,35 @@ for(i=0;i<=4;i++)
 				if(ch!='m'||ch!='M')
 				{
 					ch='m';
+				}
+			}
+			if(ch=='i'||ch=='I'){
+				t=0;
+			}
+			while((ch=='i'||ch=='I')&&(t==0)){
+				erase();
+				border( ACS_VLINE, ACS_VLINE, 
+					ACS_HLINE, ACS_HLINE, 
+					ACS_ULCORNER, ACS_URCORNER,
+					ACS_LLCORNER, ACS_LRCORNER);
+				
+				mvprintw(1,2,"EMULADOR CORTEX-M0");				
+				showPorts();
+				mvprintw(23,3,"I: Registros  M: Memoria");
+				ch=getch();
+				if(ch=='i'||ch=='I'||ch=='m'||ch=='M'){
+					t= 1;
+					if(ch=='i'||ch=='I'){
+						ch2='o';}
+					if(ch=='M'||ch=='m'){
+						ch2='n';
+					}
+					erase();
+					break;
+				}
+				if(ch!='i'||ch!='I')
+				{
+					ch='i';
 				}
 			}
 			if(ch2=='o') //Regresar a la pantalla anterior luego de mostrar la memoria SRAM
@@ -233,14 +262,15 @@ for(i=0;i<=4;i++)
 				mvprintw(10,50,"C: %d",APSR[C]);
 				mvprintw(11,50,"V: %d",APSR[V]);
 				attroff(COLOR_PAIR(3));
-				mvprintw(23,3,"P: Paso a Paso   A: Automatico   Q: Salir   R: Reiniciar  M: Memoria");
+				mvprintw(23,1,"P: Paso a Paso  A: Automatico  Q: Salir  R: Reiniciar  M: Memoria  I: Puertos");
 				refresh();
 				attroff(COLOR_PAIR(1));	/* DEshabilita los colores Pair 1 */
 			}
 		}
-
-
-		ch=getch();	//lee caracter del teclado
+		
+		if(ch2!='n'){
+			ch=getch();}	//lee caracter del teclado
+			
 		if(ch=='r'||ch=='R') //Presionando la tecla R reinicia la ejecucion del codigo
 		{
 			for(i=0;i<16;i++)

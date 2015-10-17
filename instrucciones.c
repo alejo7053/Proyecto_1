@@ -365,7 +365,7 @@ void POPI(uint8_t *SRAM, uint32_t *dir_reg,char *dir_flags)
 
 void NVIC(uint8_t *IRQ,uint8_t *SRAM, uint32_t *dir_reg,char *dir_flags)
 {
-	static flag=0;
+	 static int flag=0;
 	
 	int i;
 	
