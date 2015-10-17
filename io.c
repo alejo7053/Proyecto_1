@@ -77,7 +77,7 @@ void IOAccess(uint8_t address, uint8_t* data, uint8_t r_w)
 				PORTA.DDR = *data;
 				break;
 			case 1:				
-				//PORTA.PORT = *data; no se si esta se borre tambien
+				PORTA.PORT = *data;
 				//PORTA.Pins |= PORTA.PORT&PORTA.DDR; se debe reemplazar 
 				PORTA.Pins = (PORTA.PORT &(~PORTA.DDR))|(PORTA.PORT&PORTA.DDR);
 				break;
@@ -88,7 +88,7 @@ void IOAccess(uint8_t address, uint8_t* data, uint8_t r_w)
 				PORTB.DDR = *data;
 				break;
 			case 11:
-				//PORTB.PORT = *data; no se si esta se borre tambien
+				PORTB.PORT = *data; 
 				//PORTB.Pins |= PORTB.PORT&PORTB.DDR; se debe reemplazar 
 				PORTB.Pins = (PORTB.PORT &(~PORTB.DDR))|(PORTB.PORT&PORTB.DDR);
 				break;
