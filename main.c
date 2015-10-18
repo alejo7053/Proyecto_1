@@ -41,10 +41,7 @@ int main(void)
 	uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
 	int i=0,t=0;
 	char APSR[4], *dir_flags=APSR, ch=0, ch2='a';//orden Banderas APSR: N,Z,C,V
-	uint8_t IRQ[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; // se declara con 1 cuando hay una interrupcion
-	
-
-for(i=0;i<=4;i++)
+for(i=0;i<=15;i++)
 {
 	if(IRQ[i]==1)
 	{
@@ -73,10 +70,10 @@ for(i=0;i<=4;i++)
 	keypad(stdscr, TRUE);	/* Obtener F1, F2, etc */
 	noecho();		/* No imprimir los caracteres leidos */
 	start_color();	/* Permite manejar colores */
+	initIO();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK); //Color texto blanco, fondo negro
 	init_pair(2,COLOR_RED, COLOR_BLACK); //Color texto rojo, fondo negro
 	init_pair(3,COLOR_GREEN, COLOR_BLACK); //Color texto verde, fondo negro
-
 	attron(COLOR_PAIR(1));	/* Activa el color blanco para el 
 							   texto y negro para el fondo Pair 1*/
 	//------- No modificar ------//	
@@ -194,6 +191,7 @@ for(i=0;i<=4;i++)
 				t=0;
 			}
 			while((ch=='i'||ch=='I')&&(t==0)){
+				
 				erase();
 				border( ACS_VLINE, ACS_VLINE, 
 					ACS_HLINE, ACS_HLINE, 
@@ -204,6 +202,34 @@ for(i=0;i<=4;i++)
 				showPorts();
 				mvprintw(23,3,"I: Registros  M: Memoria  Q: Salir");
 				ch=getch();
+				uint8_t data;
+			if(ch=='1')
+			{
+			data = 0x3C;
+			IOAccess(0,&data, Write);
+			data = 0x0F ;
+			IOAccess(1,&data, Write);
+			data = 0xF0;
+			IOAccess(2,&data, Write);
+			changePinPortA(0,1);
+			changePinPortA(3,1);
+			changePinPortA(5,1);
+			changePinPortA(6,1);
+			}
+			
+			if(ch=='2')
+			{	
+			data = 0xAA;
+			IOAccess(10,&data, Write);
+			data = 0XCC;
+			IOAccess(11,&data, Write);
+			data = 0XC3;
+			IOAccess(12,&data, Write);
+			changePinPortB(0,1);
+			changePinPortB(4,1);
+			changePinPortB(3,1);
+			changePinPortB(6,1);
+			}	
 				if(ch=='i'||ch=='I'||ch=='m'||ch=='M'||ch=='q'||ch=='Q'){
 					t= 1;
 					if(ch=='i'||ch=='I'){
@@ -222,13 +248,14 @@ for(i=0;i<=4;i++)
 					ch='i';
 				}
 			}
+						
 			if(ch2=='o') //Regresar a la pantalla anterior luego de mostrar la memoria SRAM
 			{
 				erase();
 				
 				attron(COLOR_PAIR(1)); 
 				mvprintw(2,30,"EMULADOR CORTEX-M0");
-				mvprintw(4,1,"%s",instructions[dir_reg[PC]]);
+				mvprintw(4,1,"%s",instructions[dir_reg[PC]-1]);
 				
 				border( ACS_VLINE, ACS_VLINE, 
 					ACS_HLINE, ACS_HLINE, 

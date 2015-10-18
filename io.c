@@ -2,8 +2,6 @@
 
 port_t PORTA;
 port_t PORTB;
-uint8_t irq[16];
-
 void initIO(void)
 {
 	initscr();				
@@ -25,16 +23,16 @@ void changePinPortA(uint8_t pin, uint8_t value)
 {
 	if( ( (PORTA.Pins & (1<<pin)) != (value<<pin) ) && 
 		( PORTA.Interrupts & (1<<pin) ) )
-		irq[pin] = 1;
+		IRQ[pin] = 1;
 		
 	PORTA.Pins = (PORTA.Pins & ~(1<<pin)) | value<<pin;
 }
 
 void changePinPortB(uint8_t pin, uint8_t value)
 {
-	if( ( (PORTB.Pins & (1<<pin)) != (value<<pin) ) && 
+	if( ( (PORTB.Pins & (1<<pin)) != (value<<pin) ) &&
 		( PORTB.Interrupts & (1<<pin) ) )
-		irq[pin+8] = 1;		
+		IRQ[pin+8] = 1;		
 
 	PORTB.Pins = (PORTB.Pins & ~(1<<pin)) | value<<pin;
 }
@@ -79,7 +77,7 @@ void IOAccess(uint8_t address, uint8_t* data, uint8_t r_w)
 			case 1:				
 				PORTA.PORT = *data;
 				//PORTA.Pins |= PORTA.PORT&PORTA.DDR; se debe reemplazar 
-				PORTA.Pins = (PORTA.PORT &(~PORTA.DDR))|(PORTA.PORT&PORTA.DDR);
+				PORTA.Pins = (PORTA.Pins &(~PORTA.DDR))|(PORTA.PORT&PORTA.DDR);
 				break;
 			case 3:				
 				PORTA.Interrupts = *data&(~PORTA.DDR);
@@ -90,7 +88,7 @@ void IOAccess(uint8_t address, uint8_t* data, uint8_t r_w)
 			case 11:
 				PORTB.PORT = *data; 
 				//PORTB.Pins |= PORTB.PORT&PORTB.DDR; se debe reemplazar 
-				PORTB.Pins = (PORTB.PORT &(~PORTB.DDR))|(PORTB.PORT&PORTB.DDR);
+				PORTB.Pins = (PORTB.Pins &(~PORTB.DDR))|(PORTB.PORT&PORTB.DDR);
 				break;
 			case 13:				
 				PORTB.Interrupts = *data&(~PORTB.DDR);
