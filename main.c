@@ -166,7 +166,7 @@ for(i=0;i<=15;i++)
 					attroff(COLOR_PAIR(2));
 					attron(COLOR_PAIR(3));
 					mvprintw(j,7,"%.2X %.2X %.2X %.2X",SRAM[i],SRAM[i-1],SRAM[i-2],SRAM[i-3]);
-					mvprintw(j,27,"%.2X %.2X %.2X %.2X",SRAM[i-128],SRAM[(i-128)-1],SRAM[(i-128)-2],SRAM[(i-128)-3]);
+					mvprintw(j,27,"%.2X %.2X %.2X %.2X",SRAM[i-64],SRAM[(i-64)-1],SRAM[(i-64)-2],SRAM[(i-64)-3]);
 					mvprintw(j,47,"%.2X %.2X %.2X %.2X",SRAM[i-128],SRAM[(i-128)-1],SRAM[(i-128)-2],SRAM[(i-128)-3]);
 					mvprintw(j,67,"%.2X %.2X %.2X %.2X",SRAM[i-192],SRAM[(i-192)-1],SRAM[(i-192)-2],SRAM[(i-192)-3]);
 					attroff(COLOR_PAIR(3));
