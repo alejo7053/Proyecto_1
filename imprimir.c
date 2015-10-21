@@ -6,13 +6,13 @@ void valor_registro( uint32_t  valores[])
 	for(i=0;i<13;i++)	//Imprime en pantalla los registros 0-13
 	{
 		if(i<10)
-			mvprintw(6+i,1,"R%d:  %.10u",i,valores[i]);
+			mvprintw(6+i,1,"R%d:  %.10X",i,valores[i]);
 		else{
-			mvprintw(6+j,20,"R%d: %.10u",i,valores[i]);
+			mvprintw(6+j,20,"R%d: %.10X",i,valores[i]);
 			j++;
 		}
 	}
 	mvprintw(7+j,20,"SP:  %.10X",valores[i]);
-	mvprintw(8+j,20,"LR:  %.10u",valores[i+1]*2);
-	mvprintw(9+j,20,"PC:  %.10u",valores[i+2]*2); //Se impremen en pantalla LR y PC
+	mvprintw(8+j,20,"LR:  %.10X",valores[i+1]*2);
+	mvprintw(9+j,20,"PC:  %.10X",valores[i+2]*2); //Se impremen en pantalla LR y PC
 }

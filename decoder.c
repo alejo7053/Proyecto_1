@@ -309,7 +309,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	data=(uint8_t)dir_reg[instruction.op1_value];
 	if(strcmp(instruction.mnemonic,"LDR")==0){
 		dir_reg[PC]++;
-		if(instruction.op3_type=='#' || instruction.op3_type=='N'){
+		if(instruction.op2_type=='=' && instruction.op3_type=='N'){
+				dir_reg[instruction.op1_value]=instruction.op2_value;
+			}
+			
+		 else if(instruction.op3_type=='#' || instruction.op3_type=='N'){
 			*dec=26624;
 			if((dir_reg[instruction.op2_value]+(instruction.op3_value<<2))>=0x40000000)
 				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+(instruction.op3_value<<2)), &data,Read);
@@ -385,17 +389,17 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 		dir_reg[PC]++;
 		if(instruction.op3_type=='#' || instruction.op3_type=='N'){
 			*dec=24576;
-			if((dir_reg[instruction.op2_value]+(instruction.op3_value<<2))>=0x40000000)
-				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+(instruction.op3_value<<2)), &data,Write);
-			else
-				STR(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], instruction.op3_value<<2, SRAM);
+			if((dir_reg[instruction.op2_value]+(instruction.op3_value<<2))>=0x40000000){
+				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+(instruction.op3_value<<2)), &data,Write);}
+			else{
+				STR(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], instruction.op3_value<<2, SRAM);}
 			*dec=*dec|instruction.op3_value<<6|instruction.op2_value<<3|instruction.op1_value;}
 		else{
 			*dec=20480;
 			if((dir_reg[instruction.op2_value]+dir_reg[instruction.op2_value])>=0x40000000)
 				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+(dir_reg[instruction.op3_value])), &data,Write);
-			else
-				STR(dir_reg[instruction.op1_value], instruction.op2_value, instruction.op3_value, SRAM);
+			else{
+				STR(dir_reg[instruction.op1_value], instruction.op2_value, instruction.op3_value, SRAM);}
 			*dec=*dec|instruction.op3_value<<6|instruction.op2_value<<3|instruction.op1_value;}
 	}
 	
@@ -403,17 +407,17 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 		dir_reg[PC]++;
 		if(instruction.op3_type=='#' || instruction.op3_type=='N'){
 			*dec=28672;
-			if(dir_reg[instruction.op2_value]+instruction.op3_value>=0x40000000)
-				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+instruction.op3_value), &data,Write);
-			else			
-				STRB(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], instruction.op3_value, SRAM);
+			if(dir_reg[instruction.op2_value]+instruction.op3_value>=0x40000000){
+				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+instruction.op3_value), &data,Write);}
+			else{			
+				STRB(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], instruction.op3_value, SRAM);}
 			*dec=*dec|instruction.op3_value<<6|instruction.op2_value<<3|instruction.op1_value;}
 		else{
 			*dec=21504;
-			if((dir_reg[instruction.op2_value]+dir_reg[instruction.op3_value])>=0x40000000)
-				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+(dir_reg[instruction.op3_value])), &data,Write);
-			else
-				STRB(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);
+			if((dir_reg[instruction.op2_value]+dir_reg[instruction.op3_value])>=0x40000000){
+				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+(dir_reg[instruction.op3_value])), &data,Write);}
+			else{
+				STRB(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], dir_reg[instruction.op3_value], SRAM);}
 			*dec=*dec|instruction.op3_value<<6|instruction.op2_value<<3|instruction.op1_value;}
 	}
 	
@@ -477,6 +481,9 @@ instruction_t getInstruction(char* instStr)
 				break;
 			
 			case 2:
+				if(split[0] == '[')
+					split++;
+
 				instruction.op2_type  = split[0];
 				instruction.op2_value = (uint32_t)strtoll(split+1, NULL, 0);
 				break;
@@ -545,3 +552,4 @@ int countLines(FILE* fp)
 	
 	return lines;
 }
+

@@ -61,8 +61,6 @@ for(i=0;i<=15;i++)
 	{
 		SRAM[i]=255;
 	}
-	SRAM[TAM_SRAM-129]=03; //borrar esto
-	SRAM[TAM_SRAM-156]=50; //borrar esto
 	dir_reg[SP]=TAM_SRAM;
 	initscr();		/* Inicia modo curses */
 	curs_set(0);	/* Cursor Invisible */
@@ -119,7 +117,7 @@ for(i=0;i<=15;i++)
 				
 				instruction = getInstruction(instructions[dir_reg[PC]]);	//Obtiene la instruccion de acuerdo al registro PC
 				decodeInstruction(instruction, dir_reg, dir_flags, dir_SRAM, &cod); 
-				mvprintw(4,20,"%.4X",cod);
+				mvprintw(4,22,"%.4X",cod);
 				
 				mvprintw(2,30,"EMULADOR CORTEX-M0");
 				attron(COLOR_PAIR(2));
@@ -289,6 +287,8 @@ for(i=0;i<=15;i++)
 				R[i]=0;
 				if(i>=0&&i<4)
 					APSR[i]=0;
+				if(i==14)
+					R[i]=TAM_SRAM;
 			}
 			for(i=0;i<=TAM_SRAM;i++)
 			{
