@@ -203,30 +203,11 @@ for(i=0;i<=15;i++)
 				uint8_t data;
 			if(ch=='1')
 			{
-			data = 0x3C;
-			IOAccess(0,&data, Write);
-			data = 0x0F ;
-			IOAccess(1,&data, Write);
-			data = 0xF0;
-			IOAccess(2,&data, Write);
-			changePinPortA(0,1);
-			changePinPortA(3,1);
-			changePinPortA(5,1);
-			changePinPortA(6,1);
+				changePinPortA(0,1);
 			}
-			
 			if(ch=='2')
 			{	
-			data = 0xAA;
-			IOAccess(10,&data, Write);
-			data = 0XCC;
-			IOAccess(11,&data, Write);
-			data = 0XC3;
-			IOAccess(12,&data, Write);
-			changePinPortB(0,1);
-			changePinPortB(4,1);
-			changePinPortB(3,1);
-			changePinPortB(6,1);
+				changePinPortB(0,1);
 			}	
 				if(ch=='i'||ch=='I'||ch=='m'||ch=='M'||ch=='q'||ch=='Q'){
 					t= 1;
