@@ -61,7 +61,7 @@ for(i=0;i<=15;i++)
 	{
 		SRAM[i]=255;
 	}
-	dir_reg[SP]=TAM_SRAM;
+	dir_reg[SP]=TAM_SRAM+1;
 	initscr();		/* Inicia modo curses */
 	curs_set(0);	/* Cursor Invisible */
 	raw();			/* Activa modo raw */
@@ -288,7 +288,7 @@ for(i=0;i<=15;i++)
 				if(i>=0&&i<4)
 					APSR[i]=0;
 				if(i==13)
-					R[i]=TAM_SRAM;
+					R[i]=TAM_SRAM+1;
 			}
 			for(i=0;i<=TAM_SRAM;i++)
 			{
