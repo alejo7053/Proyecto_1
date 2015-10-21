@@ -41,14 +41,7 @@ int main(void)
 	uint32_t R[16], *dir_reg=R; //declaracion registro y puntero al registro
 	int i=0,t=0;
 	char APSR[4], *dir_flags=APSR, ch=0, ch2='a';//orden Banderas APSR: N,Z,C,V
-for(i=0;i<=15;i++)
-{
-	if(IRQ[i]==1)
-	{
-		NVIC(IRQ, SRAM, dir_reg, dir_flags);
-		
-	}
-}
+
 
 
 	for(i=0;i<16;i++) //inicializacion de registro y banderas en 0
@@ -114,9 +107,9 @@ for(i=0;i<=15;i++)
 					ACS_HLINE, ACS_HLINE, 
 					ACS_ULCORNER, ACS_URCORNER,
 					ACS_LLCORNER, ACS_LRCORNER);	//dibuja los bordes
-				
 				instruction = getInstruction(instructions[dir_reg[PC]]);	//Obtiene la instruccion de acuerdo al registro PC
 				decodeInstruction(instruction, dir_reg, dir_flags, dir_SRAM, &cod); 
+				NVIC(IRQ,SRAM,dir_reg,dir_flags);
 				mvprintw(4,22,"%.4X",cod);
 				
 				mvprintw(2,30,"EMULADOR CORTEX-M0");
@@ -200,7 +193,7 @@ for(i=0;i<=15;i++)
 				showPorts();
 				mvprintw(23,3,"I: Registros  M: Memoria  Q: Salir");
 				ch=getch();
-				uint8_t data;
+				//uint8_t data;
 			if(ch=='1')
 			{
 				changePinPortA(0,1);
@@ -210,7 +203,7 @@ for(i=0;i<=15;i++)
 				changePinPortB(0,1);
 			}	
 				if(ch=='i'||ch=='I'||ch=='m'||ch=='M'||ch=='q'||ch=='Q'){
-					t= 1;
+					t=1;
 					if(ch=='i'||ch=='I'){
 						ch2='o';}
 					if(ch=='M'||ch=='m'){
