@@ -287,7 +287,7 @@ for(i=0;i<=15;i++)
 				R[i]=0;
 				if(i>=0&&i<4)
 					APSR[i]=0;
-				if(i==14)
+				if(i==13)
 					R[i]=TAM_SRAM;
 			}
 			for(i=0;i<=TAM_SRAM;i++)

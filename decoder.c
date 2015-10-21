@@ -4,6 +4,7 @@
 */
 
 #include "decoder.h"
+#define SP 13
 #define PC 15
 uint8_t data;
 uint16_t *dec;
@@ -20,7 +21,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 
 	if( strcmp(instruction.mnemonic,"ADDS") == 0 || strcmp(instruction.mnemonic,"ADD") == 0){
 		dir_reg[PC]++;
-		if(instruction.op3_type=='#'){
+		if(instruction.op2_type=='S'){
+			*dec=45056;
+			dir_reg[SP]=ADD(dir_reg[SP],instruction.op3_value,dir_flags);
+			*dec=*dec|instruction.op3_value;}
+		else if(instruction.op3_type=='#'){
 			*dec=7168;
 			*dec=*dec|instruction.op3_value<<6|instruction.op2_value<<3|instruction.op1_value;
 			dir_reg[instruction.op1_value]=ADD(dir_reg[instruction.op2_value], instruction.op3_value,dir_flags);
@@ -197,7 +202,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	
 	if( strcmp(instruction.mnemonic,"SUBS") == 0 || strcmp(instruction.mnemonic,"SUB") == 0){
 		dir_reg[PC]++;
-		if(instruction.op3_type=='#'){
+		if(instruction.op2_type=='S'){
+			*dec=45184;
+			dir_reg[SP]=SUB(dir_reg[SP],instruction.op3_value,dir_flags);
+			*dec=*dec|instruction.op3_value;}
+		else if(instruction.op3_type=='#'){
 			*dec=7680;
 			dir_reg[instruction.op1_value]=SUB(dir_reg[instruction.op2_value],instruction.op3_value,dir_flags);
 			*dec=*dec|instruction.op3_value<<6|instruction.op2_value<<3|instruction.op1_value;}
@@ -226,6 +235,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	}
 	
 	if( strcmp(instruction.mnemonic,"BL") == 0 ){
+		*dec=0;
 		BL(instruction.op1_value, dir_reg);
 	}
 	
@@ -235,62 +245,77 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	}
 	
 	if( strcmp(instruction.mnemonic,"BEQ") == 0 ){
+		*dec=0;
 		BEQ(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BNE") == 0 ){
+		*dec=0;
 		BNE(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BCS") == 0 ){
+		*dec=0;
 		BCS(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BCC") == 0 ){
+		*dec=0;
 		BCC(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BMI") == 0 ){
+		*dec=0;
 		BMI(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BPL") == 0 ){
+		*dec=0;
 		BPL(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BVS") == 0 ){
+		*dec=0;
 		BVS(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BVC") == 0 ){
+		*dec=0;
 		BVC(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BHI") == 0 ){
+		*dec=0;
 		BHI(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BLS") == 0 ){
+		*dec=0;
 		BLS(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BGE") == 0 ){
+		*dec=0;
 		BGE(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BLT") == 0 ){
+		*dec=0;
 		BLT(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BGT") == 0 ){
+		*dec=0;
 		BGT(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BLE") == 0 ){
+		*dec=0;
 		BLE(instruction.op1_value, dir_reg, dir_flags);
 	}
 	
 	if( strcmp(instruction.mnemonic,"BAL") == 0 ){
+		*dec=0;
 		BAL(instruction.op1_value, dir_reg);
 	}
 	
@@ -310,10 +335,13 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	if(strcmp(instruction.mnemonic,"LDR")==0){
 		dir_reg[PC]++;
 		if(instruction.op2_type=='=' && instruction.op3_type=='N'){
-				dir_reg[instruction.op1_value]=instruction.op2_value;
-			}
-			
-		 else if(instruction.op3_type=='#' || instruction.op3_type=='N'){
+			*dec=0;
+			dir_reg[instruction.op1_value]=instruction.op2_value;}
+		else if(instruction.op2_type=='S'){
+			*dec=38912;
+			dir_reg[instruction.op1_value]=LDR(dir_reg[SP], instruction.op3_value<<2, SRAM);
+			*dec=*dec|instruction.op3_value|instruction.op1_value<<8;}
+		else if(instruction.op3_type=='#' || instruction.op3_type=='N'){
 			*dec=26624;
 			if((dir_reg[instruction.op2_value]+(instruction.op3_value<<2))>=0x40000000)
 				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+(instruction.op3_value<<2)), &data,Read);
@@ -387,13 +415,18 @@ void decodeInstruction(instruction_t instruction, uint32_t *dir_reg, char *dir_f
 	
 	if(strcmp(instruction.mnemonic,"STR")==0){
 		dir_reg[PC]++;
-		if(instruction.op3_type=='#' || instruction.op3_type=='N'){
+		if(instruction.op2_type=='S'){
+			*dec=38912;
+			STR(dir_reg[instruction.op1_value],dir_reg[SP], instruction.op3_value<<2, SRAM);
+			*dec=*dec|instruction.op3_value|instruction.op1_value<<8;}
+		else if(instruction.op3_type=='#' || instruction.op3_type=='N'){
 			*dec=24576;
 			if((dir_reg[instruction.op2_value]+(instruction.op3_value<<2))>=0x40000000){
 				IOAccess((uint8_t)(dir_reg[instruction.op2_value]+(instruction.op3_value<<2)), &data,Write);}
 			else{
 				STR(dir_reg[instruction.op1_value], dir_reg[instruction.op2_value], instruction.op3_value<<2, SRAM);}
-			*dec=*dec|instruction.op3_value<<6|instruction.op2_value<<3|instruction.op1_value;}
+			*dec=*dec|instruction.op3_value<<6|instruction.op2_value<<3|instruction.op1_value;
+			mvprintw(1,3,"Hola");}
 		else{
 			*dec=20480;
 			if((dir_reg[instruction.op2_value]+dir_reg[instruction.op2_value])>=0x40000000)

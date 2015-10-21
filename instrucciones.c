@@ -289,7 +289,6 @@ void STR(uint32_t Rt, uint32_t Rn, uint32_t Rm, uint8_t *SRAM)
 {
 	uint8_t address;
 	address=Rn+Rm;
-	//mvprintw(1,1,"%X",Rn);
 	SRAM[address]=(uint8_t)Rt; 
 	SRAM[address+1]=((uint8_t)Rt>>8);
 	SRAM[address+2]=((uint8_t)Rt>>16);
