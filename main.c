@@ -198,6 +198,10 @@ int main(void)
 			{
 				changePinPortA(0,1);
 			}
+			if(ch=='3')
+			{
+				changePinPortA(0,0);
+			}
 			if(ch=='2')
 			{	
 				changePinPortB(0,1);

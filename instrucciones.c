@@ -377,6 +377,7 @@ void NVIC(uint8_t *IRQ,uint8_t *SRAM, uint32_t *dir_reg,char *dir_flags)
 			{
 				PUSHI(SRAM,dir_reg,dir_flags);
 				dir_reg[PC] = i+1;
+				dir_reg[LR] =0xFFFFFFFF;
 				IRQ[i]=0;
 				flag = 1;
 				break;
